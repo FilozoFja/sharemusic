@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharemusic", "sharemusic\sharemusic.csproj", "{D850F944-5D55-4FB0-A342-241362428D4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D850F944-5D55-4FB0-A342-241362428D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D850F944-5D55-4FB0-A342-241362428D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D850F944-5D55-4FB0-A342-241362428D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D850F944-5D55-4FB0-A342-241362428D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {290294A9-DD15-4DD3-9804-D054A66C33A4}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+@sharemusic_HostAddress = http://localhost:5236
+
+GET {{sharemusic_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
