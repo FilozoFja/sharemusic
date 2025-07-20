@@ -51,7 +51,6 @@ namespace sharemusic.Controllers
             {
                 return NotFound(new { message = "Song not found." });
             }
-            song.SongUrl = songUrl;
             _songService.EditSong(song);
             return Ok(new { message = "Song URL added successfully." });
         }

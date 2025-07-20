@@ -20,8 +20,6 @@ namespace sharemusic.Service
                 Artist = artist,
                 Album = album,
                 Genre = genre,
-                CoverImageUrl = coverImageUrl,
-                SongUrl = songUrl,
                 IsDraft = isDraft
             };
 
@@ -47,8 +45,6 @@ namespace sharemusic.Service
             song.Artist = songModelNew.Artist;
             song.Album = songModelNew.Album;
             song.Genre = songModelNew.Genre;
-            song.CoverImageUrl = songModelNew.CoverImageUrl;
-            song.SongUrl = songModelNew.SongUrl;
             song.IsDraft = songModelNew.IsDraft;
             _dbContext.Entry(song).State = EntityState.Modified;
             _dbContext.SaveChanges();

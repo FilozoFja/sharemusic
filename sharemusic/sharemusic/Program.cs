@@ -11,10 +11,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+
 builder.Services.AddDbContext<sharemusic.Db.MusicDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ISongService,SongService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 
 var app = builder.Build();

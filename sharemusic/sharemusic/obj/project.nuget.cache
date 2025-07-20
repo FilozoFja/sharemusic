@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "1t+3k8648U8=",
+  "dgSpecHash": "oEP/yLAWLV4=",
   "success": true,
   "projectFilePath": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\sharemusic.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\korne\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\korne\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\microsoft.build.framework\\17.8.3\\microsoft.build.framework.17.8.3.nupkg.sha512",
@@ -14,6 +16,7 @@
     "C:\\Users\\korne\\.nuget\\packages\\microsoft.codeanalysis.csharp.workspaces\\4.8.0\\microsoft.codeanalysis.csharp.workspaces.4.8.0.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\4.8.0\\microsoft.codeanalysis.workspaces.common.4.8.0.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\microsoft.codeanalysis.workspaces.msbuild\\4.8.0\\microsoft.codeanalysis.workspaces.msbuild.4.8.0.nupkg.sha512",
+    "C:\\Users\\korne\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\microsoft.data.sqlite.core\\9.0.7\\microsoft.data.sqlite.core.9.0.7.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.7\\microsoft.entityframeworkcore.9.0.7.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.7\\microsoft.entityframeworkcore.abstractions.9.0.7.nupkg.sha512",
