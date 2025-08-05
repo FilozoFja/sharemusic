@@ -2,7 +2,9 @@
 using sharemusic.DTO;
 using sharemusic.Interface;
 using sharemusic.Models;
+using SpotifyAPI.Web;
 using System.Text.Json;
+using SpotifyAPI.Web;
 namespace sharemusic.Service
 {
     public class SpotifyService : ISpotifyService
@@ -18,13 +20,13 @@ namespace sharemusic.Service
             _musicDbContext = musicDbContext;
         }
 
-        public async Task GetPlaylistFromUser(string? accessToken)
+        public async Task DownloadPlaylistFromUser(string? accessToken)
         {
             if (string.IsNullOrEmpty(accessToken))
             {
                 if (await _tokenService.IsTokenValidAsync())
                 {
-                     accessToken = await _tokenService.GetAccessTokenStringAsync();
+                    accessToken = await _tokenService.GetAccessTokenStringAsync();
                 }
             }
 
@@ -77,5 +79,78 @@ namespace sharemusic.Service
                 throw new Exception("Your account is empty or there is unpredictable error.");
             }
         }
-    }
+
+        public async Task DownloadSongsFromUserPlaylist(string? accessToken, string playlistId)
+        {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                if (await _tokenService.IsTokenValidAsync())
+                {
+                    accessToken = await _tokenService.GetAccessTokenStringAsync();
+                }
+                else
+                {
+                    throw new Exception("Brak ważnego access tokenu.");
+                }
+            }
+
+            var config = SpotifyClientConfig.CreateDefault();
+            var spotify = new SpotifyClient(config.WithToken(accessToken));
+
+            var playlistFull = await spotify.Playlists.Get(playlistId);
+
+            var playlist = _musicDbContext.Playlists.FirstOrDefault(p => p.SpotifyId == playlistId);
+            if (playlist == null)
+            {
+                playlist = new PlaylistModel
+                {
+                    SpotifyId = playlistId,
+                    Name = playlistFull.Name,
+                    Description = playlistFull.Description,
+                    CoverUrl = playlistFull.Images.FirstOrDefault()?.Url
+                };
+                _musicDbContext.Playlists.Add(playlist);
+            }
+
+            var allTracks = new List<PlaylistTrack<IPlayableItem>>();
+            var page = playlistFull.Tracks;
+
+            while (page != null)
+            {
+                allTracks.AddRange(page.Items);
+                if (page.Next == null) break;
+                page = await spotify.NextPage(page);
+            }
+
+            foreach (var item in allTracks)
+            {
+                if (item.Track is FullTrack track)
+                {
+                    var existingSong = _musicDbContext.Songs.FirstOrDefault(s => s.SpotifyId == track.Id);
+                    if (existingSong == null)
+                    {
+                        existingSong = new SongModel
+                        {
+                            SpotifyId = track.Id,
+                            Title = track.Name,
+                            Artist = string.Join(", ", track.Artists.Select(a => a.Name)),
+                            Album = track.Album?.Name,
+                            Genre = "Unknown",
+                            CoverImageUrl = track.Album?.Images?.FirstOrDefault()?.Url,
+                            IsDraft = false
+                        };
+                        _musicDbContext.Songs.Add(existingSong);
+                    }
+
+                    if (!playlist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
+                    {
+                        playlist.Songs.Add(existingSong);
+                    }
+                }
+            }
+
+            await _musicDbContext.SaveChangesAsync();
+        }
+
+    }  
 }

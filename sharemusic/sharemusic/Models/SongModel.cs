@@ -8,6 +8,7 @@
         public string? Album { get; set; }
         public string? Genre { get; set; }
         public bool IsDraft { get; set; }
+        public string? CoverImageUrl { get; set; }          
 
 
         public string? SpotifyId { get; set; }               

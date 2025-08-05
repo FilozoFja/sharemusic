@@ -159,3 +159,5 @@ E:\projectX\sharemusic\sharemusic\sharemusic\bin\Debug\net8.0\zh-Hant\Microsoft.
 E:\projectX\sharemusic\sharemusic\sharemusic\obj\Debug\net8.0\sharemusic.sourcelink.json
 E:\projectX\sharemusic\sharemusic\sharemusic\bin\Debug\net8.0\AutoMapper.dll
 E:\projectX\sharemusic\sharemusic\sharemusic\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+E:\projectX\sharemusic\sharemusic\sharemusic\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\projectX\sharemusic\sharemusic\sharemusic\bin\Debug\net8.0\SpotifyAPI.Web.dll
