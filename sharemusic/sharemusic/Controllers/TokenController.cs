@@ -27,7 +27,7 @@ namespace sharemusic.Controllers
             try
             {
                 var spotifyToken = _mapper.Map<SpotifyTokenRequestModel>(spotifyTokenRequestModelDTO);
-                await _tokenService.SaveToken(spotifyToken);
+                await _tokenService.SaveTokenAsync(spotifyToken);
                 return Ok(new { message = "Token saved successfully" });
             }
             catch (Exception ex)
@@ -41,11 +41,9 @@ namespace sharemusic.Controllers
         {
             try
             {
-                var tokenStatus = await _tokenService.IsTokenExpiredAsync();
                 var tokenValid = await _tokenService.IsTokenValidAsync();
                 return Ok(new
                 {
-                    IsTokenExpired = tokenStatus,
                     IsTokenValid = tokenValid
                 });
 

@@ -33,29 +33,25 @@ namespace sharemusic.Service
             return await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
         }
 
-        public async Task<bool> IsTokenExpiredAsync()
+        public async Task<string> GetAccessTokenStringAsync()
         {
             var token = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
-
-            if (token == null)
-                return true;
-
-            return DateTime.UtcNow >= token.ExpiresAt;
+            return token.AccessToken;
         }
 
         public async Task<bool> IsTokenValidAsync()
         {
             var token = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
-
-            if (token == null || string.IsNullOrEmpty(token.AccessToken))
+            if (token == null || string.IsNullOrEmpty(token.AccessToken) || DateTime.UtcNow > token.ExpiresAt)
             {
+                await ClearTokenAsync();
                 return false;
             }
 
-            return DateTime.UtcNow < token.ExpiresAt;
+            return true;
         }
 
-        public async Task SaveToken(SpotifyTokenRequestModel spotifyTokenRequestModel)
+        public async Task SaveTokenAsync(SpotifyTokenRequestModel spotifyTokenRequestModel)
         {
             await ClearTokenAsync();
             await _dbContext.SpotifyTokens.AddAsync(spotifyTokenRequestModel);
@@ -81,5 +77,6 @@ namespace sharemusic.Service
                 throw new InvalidOperationException("No existing token found to update.");
             }
         }
+    
     }
 }

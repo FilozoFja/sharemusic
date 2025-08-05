@@ -11,9 +11,11 @@ namespace sharemusic.Controllers
     public class SongController : ControllerBase
     {
         private readonly ISongService _songService;
-        public SongController(ISongService songService)
+        private readonly ISpotifyService _spotifyService;
+        public SongController(ISongService songService, ISpotifyService spotifyService)
         {
             _songService = songService;
+            _spotifyService = spotifyService;
         }
 
         [HttpPost]
@@ -63,6 +65,13 @@ namespace sharemusic.Controllers
                 return NotFound(new { message = "Song not found." });
             }
             return Ok(song);
+        }
+
+        [HttpPost("spotifyAuth/")]
+        public async Task<IActionResult> GetWholePlaylistFromSpotify([FromBody] string? accessToken)
+        {
+            await _spotifyService.GetPlaylistFromUser(accessToken);
+            return Ok(new { message = "Playlists fetched successfully." });
         }
     }
 }

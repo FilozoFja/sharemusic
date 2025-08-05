@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sharemusic.Db;
 
@@ -10,17 +11,20 @@ using sharemusic.Db;
 namespace sharemusic.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    partial class MusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250804181309_minorchanges")]
+    partial class minorchanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
 
             modelBuilder.Entity("sharemusic.Models.PlaylistModel", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CoverUrl")
                         .HasColumnType("TEXT");
@@ -29,10 +33,6 @@ namespace sharemusic.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SpotifyId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -71,8 +71,8 @@ namespace sharemusic.Migrations
                     b.Property<string>("LocalSongPath")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PlaylistModelId")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("PlaylistModelId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("Popularity")
                         .HasColumnType("INTEGER");

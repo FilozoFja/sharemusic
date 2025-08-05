@@ -4,13 +4,13 @@ namespace sharemusic.Interface
 {
     public interface ITokenService
     {
-        Task SaveToken(SpotifyTokenRequestModel spotifyTokenRequestModel);
+        Task SaveTokenAsync(SpotifyTokenRequestModel spotifyTokenRequestModel);
         Task<SpotifyTokenRequestModel?> GetAccessTokenAsync();
         Task UpdateTokenAsync(SpotifyTokenRequestModel spotifyTokenRequestModel);
+        Task<string> GetAccessTokenStringAsync();
 
 
         Task<bool> IsTokenValidAsync();
-        Task<bool> IsTokenExpiredAsync();
         Task ClearTokenAsync();
     }
 }
