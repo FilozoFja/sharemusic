@@ -2,57 +2,59 @@
 using sharemusic.Db;
 using sharemusic.Interface;
 using sharemusic.Models;
+using sharemusic.DTO;
+using AutoMapper;
 
 namespace sharemusic.Service
 {
     public class SongService : ISongService
     {
         private readonly MusicDbContext _dbContext;
-        public SongService(MusicDbContext dbContext) {
+        private readonly IMapper _mapper;
+        public SongService(MusicDbContext dbContext, IMapper mapper) {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public void AddSongDraft(string title, string? artist, string? album, string? genre, string? coverImageUrl, string? songUrl, bool isDraft)
+        public async Task AddSongAsync(SongModelDTO songDTO)
         {
-            var song = new Models.SongModel
-            {
-                Title = title,
-                Artist = artist,
-                Album = album,
-                Genre = genre,
-                IsDraft = isDraft
-            };
-
-            _dbContext.Songs.Add(song);
-            _dbContext.SaveChanges();
+            await _dbContext.Songs.AddAsync(_mapper.Map<SongModel>(songDTO));
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void DeleteSongDraft(int id)
+        public async Task DeleteSongAsync(string id)
         {
-            var song = _dbContext.Songs.Find(id);
+            var song = await _dbContext.Songs.FindAsync(id);
             if (song != null)
             {
                 _dbContext.Songs.Remove(song);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
         }
 
-        public void EditSong(SongModel songModelNew)
+        public async Task EditSongAsync(SongModelDTO songDTO, string id)
         {
-            int id = songModelNew.Id;
-            var song = _dbContext.Songs.Find(id);
-            song.Title = songModelNew.Title;
-            song.Artist = songModelNew.Artist;
-            song.Album = songModelNew.Album;
-            song.Genre = songModelNew.Genre;
-            song.IsDraft = songModelNew.IsDraft;
+            var song = await GetSongById(id);
+            var songNew = _mapper.Map<SongModel>(songDTO);
+            song.Title = songNew.Title;
+            song.Artist = songNew.Artist;
+            song.Album = songNew.Album;
+            song.Genre = songNew.Genre;
+            song.IsDraft = songNew.IsDraft;
             _dbContext.Entry(song).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
 
-        public SongModel? GetSongById(int id)
+        public async Task EditSongURLAsync(string id, string url)
         {
-            return _dbContext.Songs.Find(id);
+            var song = await GetSongById(id);
+            song.LocalSongPath = url;
+            _dbContext.SaveChanges();
+        }
+
+        public async Task<SongModel?> GetSongById(string id)
+        {
+            return await _dbContext.Songs.FindAsync(id);
         }
     }
 }

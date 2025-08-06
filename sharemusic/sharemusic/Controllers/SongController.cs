@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sharemusic.DTO;
 using sharemusic.Interface;
-using sharemusic.Models;
 
 namespace sharemusic.Controllers
 {
@@ -18,45 +17,38 @@ namespace sharemusic.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddSongDraft(SongModelDTO songModelDTO)
+        public async Task<IActionResult> AddSongDraft(SongModelDTO songModelDTO)
         {
-            _songService.AddSongDraft(
-                songModelDTO.Title,
-                songModelDTO.Artist,
-                songModelDTO.Album,
-                songModelDTO.Genre,
-                songModelDTO.CoverImageUrl,
-                songModelDTO.SongUrl,
-                songModelDTO.IsDraft
-            );
+            await _songService.AddSongAsync(songModelDTO);
 
             return Ok(new { message = "Song draft added successfully." });
         }
+
         [HttpDelete("{id}")]
-        public IActionResult DeleteSongDraft(int id)
+        public async Task<IActionResult> DeleteSongDraft(string id)
         {
-            _songService.DeleteSongDraft(id);
+            await _songService.DeleteSongAsync(id);
             return Ok(new { message = "Song draft deleted successfully." });
         }
+
         [HttpPut]
-        public IActionResult EditSong(SongModel songModelNew)
+        public async Task<IActionResult> EditSong(SongModelDTO songModelDTO, string id)
         {
-            _songService.EditSong(songModelNew);
+            await _songService.EditSongAsync(songModelDTO, id);
             return Ok(new { message = "Song edited successfully." });
         }
+
         [HttpPut("{id}/{songUrl}")]
-        public IActionResult AddUrlToSong(int id, string songUrl)
+        public async Task<IActionResult> AddUrlToSong(string id, string songUrl)
         {
             var song = _songService.GetSongById(id);
-            if (song == null)
-            {
-                return NotFound(new { message = "Song not found." });
-            }
-            _songService.EditSong(song);
+            if (song == null){return NotFound(new { message = "Song not found." });}
+            await _songService.EditSongURLAsync(id,songUrl);
+
             return Ok(new { message = "Song URL added successfully." });
         }
         [HttpGet("{id}")]
-        public IActionResult GetSongById(int id)
+        public IActionResult GetSongById(string id)
         {
             var song = _songService.GetSongById(id);
             if (song == null)

@@ -1,12 +1,14 @@
 ﻿using sharemusic.Models;
+using sharemusic.DTO;
 
 namespace sharemusic.Interface
 {
     public interface ISongService
     {
-        public void AddSongDraft(string title, string? artist, string? album, string? genre, string? coverImageUrl, string? songUrl, bool isDraft);
-        public void DeleteSongDraft(int id);
-        public void EditSong(SongModel songModelNew);
-        public SongModel? GetSongById(int id); 
+        public Task AddSongAsync(SongModelDTO songDTO);
+        public Task DeleteSongAsync(string id);
+        public Task EditSongAsync(SongModelDTO songDTO, string id);
+        public Task<SongModel?> GetSongById(string id);
+        public Task EditSongURLAsync(string id, string url);
     }
 }

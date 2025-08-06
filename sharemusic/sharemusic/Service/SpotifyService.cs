@@ -85,14 +85,7 @@ namespace sharemusic.Service
             var playlist = _musicDbContext.Playlists.FirstOrDefault(p => p.SpotifyId == playlistId);
             if (playlist == null)
             {
-                playlist = new PlaylistModel
-                {
-                    SpotifyId = playlistId,
-                    Name = playlistFull.Name,
-                    Description = playlistFull.Description,
-                    CoverUrl = playlistFull.Images.FirstOrDefault()?.Url
-                };
-                _musicDbContext.Playlists.Add(playlist);
+                await _playlistService.AddPlaylist(playlistFull);
             }
 
             var allTracks = new List<PlaylistTrack<IPlayableItem>>();
