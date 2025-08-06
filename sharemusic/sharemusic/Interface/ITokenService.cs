@@ -1,16 +1,17 @@
-﻿using sharemusic.Models;
+﻿using sharemusic.DTO;
+using sharemusic.Models;
 
 namespace sharemusic.Interface
 {
     public interface ITokenService
     {
-        Task SaveTokenAsync(SpotifyTokenRequestModel spotifyTokenRequestModel);
+        Task SaveTokenAsync(SpotifyTokenRequestModelDTO spotifyTokenRequestModel);
         Task<SpotifyTokenRequestModel?> GetAccessTokenAsync();
-        Task UpdateTokenAsync(SpotifyTokenRequestModel spotifyTokenRequestModel);
-        Task<string> GetAccessTokenStringAsync();
+        Task UpdateTokenAsync(SpotifyTokenRequestModelDTO spotifyTokenRequestModel);
+        Task<SpotifyTokenRequestModel> GetAccessTokenStringAsync();
 
 
         Task<bool> IsTokenValidAsync();
-        Task ClearTokenAsync();
+        Task DeleteTokenAsync();
     }
 }

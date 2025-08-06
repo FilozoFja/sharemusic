@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using sharemusic.DTO;
 using sharemusic.Interface;
 using sharemusic.Models;
@@ -67,16 +66,17 @@ namespace sharemusic.Controllers
             return Ok(song);
         }
 
-        [HttpPost("spotifyAuth/")]
-        public async Task<IActionResult> GetWholePlaylistFromSpotify([FromBody] string? accessToken)
+        [HttpPost("downloadFromSpotify/")]
+        public async Task<IActionResult> GetWholePlaylistFromSpotify()
         {
-            await _spotifyService.DownloadPlaylistFromUser(accessToken);
+            await _spotifyService.DownloadPlaylistFromUser();
             return Ok(new { message = "Playlists fetched successfully." });
         }
-        [HttpPost("spotifyAuth/{playlistId}")]
-        public async Task<IActionResult> DownloadDraftSongFromSpotifyPlaylisy([FromBody] string? accessToken, string playlistId)
+
+        [HttpPost("downloadFromSpotify/{playlistId}")]
+        public async Task<IActionResult> DownloadDraftSongFromSpotifyPlaylisy(string playlistId)
         {
-            await _spotifyService.DownloadSongsFromUserPlaylist(accessToken, playlistId);
+            await _spotifyService.DownloadSongsFromUserPlaylist(playlistId);
             return Ok(new { message = "Songs downloaded successfully." });
         }
     }

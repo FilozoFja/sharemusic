@@ -2,7 +2,7 @@
 {
     public interface ISpotifyService
     {
-        public Task DownloadPlaylistFromUser(string? accessToken);
-        public Task DownloadSongsFromUserPlaylist(string playlistId, string? accessToken);
+        public Task DownloadPlaylistFromUser();
+        public Task DownloadSongsFromUserPlaylist(string playlistId);
     }
 }

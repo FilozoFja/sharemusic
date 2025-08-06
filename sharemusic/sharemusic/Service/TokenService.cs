@@ -1,24 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using sharemusic.Db;
 using sharemusic.Interface;
 using sharemusic.Models;
-using System.Text.Json;
+using AutoMapper;
+using sharemusic.DTO;
 
 namespace sharemusic.Service
 {
     public class TokenService : ITokenService
     {
         private readonly MusicDbContext _dbContext;
-        private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public TokenService(MusicDbContext dbContext, IConfiguration configuration)
+        public TokenService(MusicDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
-            _configuration = configuration;
+            _mapper = mapper;
         }
 
-        public async Task ClearTokenAsync()
+        public async Task DeleteTokenAsync()
         {
             var token = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
             if (token != null)
@@ -33,10 +33,10 @@ namespace sharemusic.Service
             return await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
         }
 
-        public async Task<string> GetAccessTokenStringAsync()
+        public async Task<SpotifyTokenRequestModel> GetAccessTokenStringAsync()
         {
             var token = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
-            return token.AccessToken;
+            return string.IsNullOrEmpty(token?.AccessToken) ? throw new Exception("Access token is empty") : token;
         }
 
         public async Task<bool> IsTokenValidAsync()
@@ -44,38 +44,27 @@ namespace sharemusic.Service
             var token = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
             if (token == null || string.IsNullOrEmpty(token.AccessToken) || DateTime.UtcNow > token.ExpiresAt)
             {
-                await ClearTokenAsync();
+                await DeleteTokenAsync();
                 return false;
             }
 
             return true;
         }
 
-        public async Task SaveTokenAsync(SpotifyTokenRequestModel spotifyTokenRequestModel)
+        public async Task SaveTokenAsync(SpotifyTokenRequestModelDTO spotifyTokenRequestModel)
         {
-            await ClearTokenAsync();
-            await _dbContext.SpotifyTokens.AddAsync(spotifyTokenRequestModel);
-
+            await DeleteTokenAsync();
+            var newToken = _mapper.Map<SpotifyTokenRequestModel>(spotifyTokenRequestModel);
+            await _dbContext.SpotifyTokens.AddAsync(newToken);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateTokenAsync(SpotifyTokenRequestModel spotifyNewToken)
+        public async Task UpdateTokenAsync(SpotifyTokenRequestModelDTO spotifyNewToken)
         {
             var oldToken = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
-            if (oldToken != null)
-            {
-                oldToken.AccessToken = spotifyNewToken.AccessToken;
-                oldToken.RefreshToken = spotifyNewToken.RefreshToken;
-                oldToken.ExpiresIn = spotifyNewToken.ExpiresIn;
-                oldToken.TokenType = spotifyNewToken.TokenType;
-                oldToken.Scope = spotifyNewToken.Scope;
-
-                await _dbContext.SaveChangesAsync();
-            }
-            else
-            {
-                throw new InvalidOperationException("No existing token found to update.");
-            }
+            oldToken = _mapper.Map<SpotifyTokenRequestModel>(spotifyNewToken);
+            await _dbContext.SaveChangesAsync();
+            
         }
     
     }

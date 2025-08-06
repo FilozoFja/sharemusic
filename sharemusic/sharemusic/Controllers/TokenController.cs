@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using sharemusic.DTO;
 using sharemusic.Interface;
-using sharemusic.Models;
 
 namespace sharemusic.Controllers
 {
@@ -10,11 +8,9 @@ namespace sharemusic.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
-        public TokenController(IMapper mapper,ITokenService tokenService)
+        public TokenController(ITokenService tokenService)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _tokenService = tokenService ?? throw new ArgumentNullException(nameof(_tokenService));
         }
 
@@ -26,8 +22,7 @@ namespace sharemusic.Controllers
 
             try
             {
-                var spotifyToken = _mapper.Map<SpotifyTokenRequestModel>(spotifyTokenRequestModelDTO);
-                await _tokenService.SaveTokenAsync(spotifyToken);
+                await _tokenService.SaveTokenAsync(spotifyTokenRequestModelDTO);
                 return Ok(new { message = "Token saved successfully" });
             }
             catch (Exception ex)
@@ -59,7 +54,7 @@ namespace sharemusic.Controllers
         {
             try
             {
-                await _tokenService.ClearTokenAsync();
+                await _tokenService.DeleteTokenAsync();
                 return Ok(new { message = "Token cleared successfully" });
             }
             catch (Exception ex)

@@ -4,7 +4,6 @@ using sharemusic.Interface;
 using sharemusic.Models;
 using SpotifyAPI.Web;
 using System.Text.Json;
-using SpotifyAPI.Web;
 namespace sharemusic.Service
 {
     public class SpotifyService : ISpotifyService
@@ -12,26 +11,24 @@ namespace sharemusic.Service
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ITokenService _tokenService;
         private readonly MusicDbContext _musicDbContext;
+        private readonly IPlaylistService _playlistService;
 
-        public SpotifyService(IHttpClientFactory httpClientFactory, ITokenService tokenService, MusicDbContext musicDbContext)
+        public SpotifyService(IHttpClientFactory httpClientFactory, ITokenService tokenService
+                                    , MusicDbContext musicDbContext, IPlaylistService playlistService)
         {
             _httpClientFactory = httpClientFactory;
             _tokenService = tokenService;
             _musicDbContext = musicDbContext;
+            _playlistService = playlistService;
         }
 
-        public async Task DownloadPlaylistFromUser(string? accessToken)
+        public async Task DownloadPlaylistFromUser()
         {
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                if (await _tokenService.IsTokenValidAsync())
-                {
-                    accessToken = await _tokenService.GetAccessTokenStringAsync();
-                }
-            }
+            var token = await _tokenService.GetAccessTokenStringAsync();
+
 
             var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.AccessToken);
             var response = await client.GetAsync("https://api.spotify.com/v1/me/playlists");
             if (!response.IsSuccessStatusCode)
             {
@@ -80,23 +77,9 @@ namespace sharemusic.Service
             }
         }
 
-        public async Task DownloadSongsFromUserPlaylist(string? accessToken, string playlistId)
+        public async Task DownloadSongsFromUserPlaylist(string playlistId)
         {
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                if (await _tokenService.IsTokenValidAsync())
-                {
-                    accessToken = await _tokenService.GetAccessTokenStringAsync();
-                }
-                else
-                {
-                    throw new Exception("Brak ważnego access tokenu.");
-                }
-            }
-
-            var config = SpotifyClientConfig.CreateDefault();
-            var spotify = new SpotifyClient(config.WithToken(accessToken));
-
+            SpotifyClient spotify = await SetSpotifyDefaultRequest();
             var playlistFull = await spotify.Playlists.Get(playlistId);
 
             var playlist = _musicDbContext.Playlists.FirstOrDefault(p => p.SpotifyId == playlistId);
@@ -150,6 +133,14 @@ namespace sharemusic.Service
             }
 
             await _musicDbContext.SaveChangesAsync();
+        }
+
+        public async Task<SpotifyClient> SetSpotifyDefaultRequest()
+        {
+            var token = await _tokenService.GetAccessTokenStringAsync();
+            var config = SpotifyClientConfig.CreateDefault();
+            return new SpotifyClient(config.WithToken(token.AccessToken));;
+
         }
 
     }  
