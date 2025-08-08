@@ -110,10 +110,10 @@ namespace sharemusic.Service
                             SpotifyId = track.Id,
                             Title = track.Name,
                             Artist = string.Join(", ", track.Artists.Select(a => a.Name)),
+                            ArtistId = track.Artists.FirstOrDefault()?.Id,
                             Album = track.Album?.Name,
-                            Genre = "Unknown",
                             CoverImageUrl = track.Album?.Images?.FirstOrDefault()?.Url,
-                            IsDraft = false
+                            IsDraft = true
                         };
                         _musicDbContext.Songs.Add(existingSong);
                     }

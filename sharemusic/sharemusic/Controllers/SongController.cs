@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sharemusic.DTO;
+using sharemusic.DTO.SongModel;
 using sharemusic.Interface;
 
 namespace sharemusic.Controllers
@@ -9,15 +10,13 @@ namespace sharemusic.Controllers
     public class SongController : ControllerBase
     {
         private readonly ISongService _songService;
-        private readonly ISpotifyService _spotifyService;
-        public SongController(ISongService songService, ISpotifyService spotifyService)
+        public SongController(ISongService songService)
         {
             _songService = songService;
-            _spotifyService = spotifyService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSongDraft(SongModelDTO songModelDTO)
+        public async Task<IActionResult> AddSongAsync(SongModelDTO songModelDTO)
         {
             await _songService.AddSongAsync(songModelDTO);
 
@@ -25,32 +24,23 @@ namespace sharemusic.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSongDraft(string id)
+        public async Task<IActionResult> DeleteSongAsync(string id)
         {
             await _songService.DeleteSongAsync(id);
             return Ok(new { message = "Song draft deleted successfully." });
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditSong(SongModelDTO songModelDTO, string id)
+        public async Task<IActionResult> EditSongAsync(SongModelDTO songModelDTO, string id)
         {
             await _songService.EditSongAsync(songModelDTO, id);
             return Ok(new { message = "Song edited successfully." });
         }
 
-        [HttpPut("{id}/{songUrl}")]
-        public async Task<IActionResult> AddUrlToSong(string id, string songUrl)
-        {
-            var song = _songService.GetSongById(id);
-            if (song == null){return NotFound(new { message = "Song not found." });}
-            await _songService.EditSongURLAsync(id,songUrl);
-
-            return Ok(new { message = "Song URL added successfully." });
-        }
         [HttpGet("{id}")]
         public IActionResult GetSongById(string id)
         {
-            var song = _songService.GetSongById(id);
+            var song = _songService.GetSongByIdAsync(id);
             if (song == null)
             {
                 return NotFound(new { message = "Song not found." });
@@ -58,18 +48,23 @@ namespace sharemusic.Controllers
             return Ok(song);
         }
 
-        [HttpPost("downloadFromSpotify/")]
-        public async Task<IActionResult> GetWholePlaylistFromSpotify()
+        [HttpGet]
+        public async Task<IActionResult> GetAllSongsAsync()
         {
-            await _spotifyService.DownloadPlaylistFromUser();
-            return Ok(new { message = "Playlists fetched successfully." });
+            return Ok(await _songService.GetAllSongsAsync());
+        }
+        [HttpGet("search/song/{name}")]
+        public async Task<IActionResult> SearchSongsAsync([FromQuery] string name)
+        {
+            return Ok(await _songService.GetSongByNameAsync(name));
         }
 
-        [HttpPost("downloadFromSpotify/{playlistId}")]
-        public async Task<IActionResult> DownloadDraftSongFromSpotifyPlaylisy(string playlistId)
+        [HttpGet("{id}/{url}/{songLengthInSeconds}")]
+        public async Task<IActionResult> AddSongLengthAndURLAsync(string id, string url, int songLengthInSeconds)
         {
-            await _spotifyService.DownloadSongsFromUserPlaylist(playlistId);
-            return Ok(new { message = "Songs downloaded successfully." });
+            await _songService.AddSongLengthAndURLAsync(id, songLengthInSeconds, url);
+            return Ok(new { message = "Song length and URL added successfully." });
         }
+
     }
 }

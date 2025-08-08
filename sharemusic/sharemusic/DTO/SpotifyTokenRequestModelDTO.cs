@@ -7,7 +7,7 @@ namespace sharemusic.DTO
         [Required(ErrorMessage = "Access token jest wymagany")]
         [StringLength(2000, MinimumLength = 50, ErrorMessage = "Access token ma nieprawidłowy format")]
         [RegularExpression(@"^[A-Za-z0-9_-]+$", ErrorMessage = "Access token zawiera nieprawidłowe znaki")]
-        public string AccessToken { get; set; }
+        public required string AccessToken { get; set; }
 
         [Required(ErrorMessage = "ExpiresIn jest wymagane")]
         [Range(1, 7200, ErrorMessage = "ExpiresIn musi być między 1 a 7200 sekund")]

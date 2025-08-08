@@ -4,6 +4,7 @@ using sharemusic.Interface;
 using sharemusic.Models;
 using sharemusic.DTO;
 using AutoMapper;
+using sharemusic.DTO.SongModel;
 
 namespace sharemusic.Service
 {
@@ -11,7 +12,8 @@ namespace sharemusic.Service
     {
         private readonly MusicDbContext _dbContext;
         private readonly IMapper _mapper;
-        public SongService(MusicDbContext dbContext, IMapper mapper) {
+        public SongService(MusicDbContext dbContext, IMapper mapper)
+        {
             _dbContext = dbContext;
             _mapper = mapper;
         }
@@ -20,6 +22,19 @@ namespace sharemusic.Service
         {
             await _dbContext.Songs.AddAsync(_mapper.Map<SongModel>(songDTO));
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddSongLengthAndURLAsync(string id, int songLengthInSeconds, string url)
+        {
+            var song = await GetSongByIdAsync(id);
+            if (song != null)
+            {
+                song.SongLengthInSeconds = songLengthInSeconds;
+                song.LocalSongPath = url;
+                song.IsDraft = false;
+                _dbContext.Entry(song).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteSongAsync(string id)
@@ -34,27 +49,46 @@ namespace sharemusic.Service
 
         public async Task EditSongAsync(SongModelDTO songDTO, string id)
         {
-            var song = await GetSongById(id);
-            var songNew = _mapper.Map<SongModel>(songDTO);
-            song.Title = songNew.Title;
-            song.Artist = songNew.Artist;
-            song.Album = songNew.Album;
-            song.Genre = songNew.Genre;
-            song.IsDraft = songNew.IsDraft;
+            var song = await GetSongByIdAsync(id);
+            if (song == null)
+            {
+                throw new Exception("Song not found.");
+            }
+
+            song.Title = songDTO.Title != null ? songDTO.Title : throw new Exception("Title cannot be null");
+            song.Artist = songDTO.Artist;
+            song.Album = songDTO.Album;
+            song.IsDraft = songDTO.IsDraft != null ? songDTO.IsDraft.Value : true;
+            song.SongLengthInSeconds = songDTO.SongLengthInSeconds;
+            song.LocalSongPath = songDTO.LocalSongPath;
+            song.ArtistId = songDTO.ArtistId;
+            song.CoverImageUrl = songDTO.CoverImageUrl;
             _dbContext.Entry(song).State = EntityState.Modified;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task EditSongURLAsync(string id, string url)
+        public async Task<List<SongShortModelDTO>> GetAllSongsAsync()
         {
-            var song = await GetSongById(id);
-            song.LocalSongPath = url;
-            _dbContext.SaveChanges();
+            var songs = await _dbContext.Songs.ToListAsync();
+            if (songs == null || !songs.Any())
+            {
+                throw new Exception("No songs found.");
+            }
+            return _mapper.Map<List<SongShortModelDTO>>(songs);
         }
 
-        public async Task<SongModel?> GetSongById(string id)
+        public async Task<SongModel?> GetSongByIdAsync(string id)
         {
-            return await _dbContext.Songs.FindAsync(id);
+            return await _dbContext.Songs.FindAsync(id); ;
+        }
+
+        public async Task<List<SongShortModelDTO>> GetSongByNameAsync(string name)
+        {
+            var songs = _dbContext.Songs
+                .Where(s => s.Title.Contains(name, StringComparison.OrdinalIgnoreCase))
+                .ToListAsync();
+            if (songs == null){throw new Exception("No songs found with the given name.");}
+            return _mapper.Map<List<SongShortModelDTO>>(await songs);
         }
     }
 }
