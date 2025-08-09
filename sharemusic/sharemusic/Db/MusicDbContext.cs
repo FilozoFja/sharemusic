@@ -10,6 +10,7 @@ namespace sharemusic.Db
         public DbSet<Models.SongModel> Songs { get; set; }
         public DbSet<Models.PlaylistModel> Playlists { get; set; }
         public DbSet<Models.SpotifyTokenRequestModel> SpotifyTokens { get; set; }
+        public DbSet<Models.ArtistModel> Artists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
