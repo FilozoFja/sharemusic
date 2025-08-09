@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sharemusic.DTO;
-using sharemusic.DTO.SongModel;
 using sharemusic.Interface;
 
 namespace sharemusic.Controllers
@@ -15,30 +14,22 @@ namespace sharemusic.Controllers
             _songService = songService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddSongAsync(SongModelDTO songModelDTO)
-        {
-            await _songService.AddSongAsync(songModelDTO);
-
-            return Ok(new { message = "Song draft added successfully." });
-        }
-
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSongAsync(string id)
+        public async Task<IActionResult> DeleteSongAsync(int id)
         {
             await _songService.DeleteSongAsync(id);
             return Ok(new { message = "Song draft deleted successfully." });
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditSongAsync(SongModelDTO songModelDTO, string id)
+        public async Task<IActionResult> EditSongAsync(SongModelDTO songModelDTO, int id)
         {
             await _songService.EditSongAsync(songModelDTO, id);
             return Ok(new { message = "Song edited successfully." });
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetSongById(string id)
+        public IActionResult GetSongById(int id)
         {
             var song = _songService.GetSongByIdAsync(id);
             if (song == null)
@@ -60,7 +51,7 @@ namespace sharemusic.Controllers
         }
 
         [HttpGet("{id}/{url}/{songLengthInSeconds}")]
-        public async Task<IActionResult> AddSongLengthAndURLAsync(string id, string url, int songLengthInSeconds)
+        public async Task<IActionResult> AddSongLengthAndURLAsync(int id, string url, int songLengthInSeconds)
         {
             await _songService.AddSongLengthAndURLAsync(id, songLengthInSeconds, url);
             return Ok(new { message = "Song length and URL added successfully." });

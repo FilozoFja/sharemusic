@@ -18,13 +18,7 @@ namespace sharemusic.Service
             _mapper = mapper;
         }
 
-        public async Task AddSongAsync(SongModelDTO songDTO)
-        {
-            await _dbContext.Songs.AddAsync(_mapper.Map<SongModel>(songDTO));
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task AddSongLengthAndURLAsync(string id, int songLengthInSeconds, string url)
+        public async Task AddSongLengthAndURLAsync(int id, int songLengthInSeconds, string url)
         {
             var song = await GetSongByIdAsync(id);
             if (song != null)
@@ -37,7 +31,7 @@ namespace sharemusic.Service
             }
         }
 
-        public async Task DeleteSongAsync(string id)
+        public async Task DeleteSongAsync(int id)
         {
             var song = await _dbContext.Songs.FindAsync(id);
             if (song != null)
@@ -47,7 +41,7 @@ namespace sharemusic.Service
             }
         }
 
-        public async Task EditSongAsync(SongModelDTO songDTO, string id)
+        public async Task EditSongAsync(SongModelDTO songDTO, int id)
         {
             var song = await GetSongByIdAsync(id);
             if (song == null)
@@ -63,6 +57,7 @@ namespace sharemusic.Service
             song.LocalSongPath = songDTO.LocalSongPath;
             song.ArtistId = songDTO.ArtistId;
             song.CoverImageUrl = songDTO.CoverImageUrl;
+            song.ReleaseDate = songDTO.ReleaseDate;
             _dbContext.Entry(song).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
@@ -77,7 +72,7 @@ namespace sharemusic.Service
             return _mapper.Map<List<SongShortModelDTO>>(songs);
         }
 
-        public async Task<SongModel?> GetSongByIdAsync(string id)
+        public async Task<SongModel?> GetSongByIdAsync(int id)
         {
             return await _dbContext.Songs.FindAsync(id); ;
         }

@@ -5,7 +5,7 @@ namespace sharemusic.Models
     public class PlaylistModel
     {
         [Key] 
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public int Id { get; set; }
         public string? SpotifyId { get; set; }
         public required string Name { get; set; }
         public string? Description { get; set; }

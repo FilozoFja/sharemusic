@@ -93,7 +93,10 @@ namespace sharemusic.Service
 
             while (page != null)
             {
-                allTracks.AddRange(page.Items);
+                if (page.Items != null)
+                {
+                    allTracks.AddRange(page.Items);
+                }
                 if (page.Next == null) break;
                 page = await spotify.NextPage(page);
             }
@@ -113,12 +116,13 @@ namespace sharemusic.Service
                             ArtistId = track.Artists.FirstOrDefault()?.Id,
                             Album = track.Album?.Name,
                             CoverImageUrl = track.Album?.Images?.FirstOrDefault()?.Url,
-                            IsDraft = true
+                            IsDraft = true,
+                            ReleaseDate = DateTime.TryParse(track.Album?.ReleaseDate, out var rd) ? rd : null
                         };
                         _musicDbContext.Songs.Add(existingSong);
                     }
 
-                    if (!playlist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
+                    if (playlist != null && playlist.Songs != null && !playlist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
                     {
                         playlist.Songs.Add(existingSong);
                     }

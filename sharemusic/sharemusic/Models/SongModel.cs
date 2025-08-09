@@ -14,7 +14,7 @@
         public string? SpotifyId { get; set; }                                    
 
         public string? LocalSongPath { get; set; }               
-
+        public DateTime? ReleaseDate { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
