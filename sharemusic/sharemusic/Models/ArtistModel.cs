@@ -6,7 +6,7 @@ public class ArtistModel
 {
     [Key]
     [Required]
-    public string Id { get; set; }
+    public required string Id { get; set; }
     [Required]
     public required string SpotifyId { get; set; }
     public string? Name { get; set; }

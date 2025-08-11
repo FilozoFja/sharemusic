@@ -82,8 +82,13 @@ namespace sharemusic.Service
             var songs = _dbContext.Songs
                 .Where(s => s.Title.Contains(name, StringComparison.OrdinalIgnoreCase))
                 .ToListAsync();
-            if (songs == null){throw new Exception("No songs found with the given name.");}
+            if (songs == null) { throw new Exception("No songs found with the given name."); }
             return _mapper.Map<List<SongShortModelDTO>>(await songs);
         }
+
+
+
+
+
     }
 }

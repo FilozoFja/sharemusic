@@ -32,7 +32,7 @@ public class ArtistService : IArtistService
             .ToListAsync();
     }
 
-    public async Task<List<ArtistShortModelDTO?>> GetArtistByNameAsync(string name)
+    public async Task<List<ArtistShortModelDTO?>> GetArtistsByNameAsync(string name)
     {
         var artists = await _musicDbContext.Artists
             .Where(x => x.Name != null && x.Name.Contains(name))
@@ -40,11 +40,11 @@ public class ArtistService : IArtistService
             .ToListAsync();
         if (artists == null || artists.Count == 0)
         {
-            return [];
+            return new List<ArtistShortModelDTO?>();
         }
         return artists.Cast<ArtistShortModelDTO?>().ToList();
     }
-    
+
     public async Task AddArtistAsync(ArtistModelDTO artist)
     {
         if (artist == null)
@@ -53,5 +53,39 @@ public class ArtistService : IArtistService
         }
         _musicDbContext.Artists.Add(_mapper.Map<ArtistModel>(artist));
         await _musicDbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteArtistAsync(string id)
+    {
+        var artist = await _musicDbContext.Artists.FindAsync(id);
+        if (artist == null)
+        {
+            throw new KeyNotFoundException("Artist not found.");
+        }
+        _musicDbContext.Artists.Remove(artist);
+        await _musicDbContext.SaveChangesAsync();
+    }
+
+    public async Task<ArtistModelDTO> UpdateArtistAsync(string id, ArtistModelDTO artistDto)
+    {
+        if (artistDto == null)
+        {
+            throw new ArgumentNullException(nameof(artistDto));
+        }
+
+        var artist = await _musicDbContext.Artists.FindAsync(id);
+        if (artist == null)
+        {
+            throw new ArgumentException("Artist not found.", nameof(id));
+        }
+
+        artist.Name = artistDto.Name;
+        artist.ImageUrl = artistDto.ImageUrl;
+        artist.Genres = artistDto.Genres;
+
+        _musicDbContext.Artists.Update(artist);
+        await _musicDbContext.SaveChangesAsync();
+
+        return _mapper.Map<ArtistModelDTO>(artist);
     }
 }

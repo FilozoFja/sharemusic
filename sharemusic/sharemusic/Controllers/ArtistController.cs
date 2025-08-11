@@ -4,6 +4,8 @@ using sharemusic.Interface;
 using sharemusic.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
+[Route("api/artists")]
+[ApiController]
 public class ArtistController : ControllerBase
 {
     private readonly IArtistService _artistService;
@@ -12,34 +14,48 @@ public class ArtistController : ControllerBase
     {
         _artistService = artistService;
     }
-
+/// <summary>
+///  Gettings artist by id
+/// </summary>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetArtist(string id)
+    public async Task<IActionResult> GetArtist([FromRoute]string id)
     {
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            return BadRequest("Artist ID is required.");
+        }
+
         var artist = await _artistService.GetArtistAsync(id);
         if (artist == null)
         {
-            return NotFound();
+            return NotFound(new { Message = "Artist not found." });
         }
         return Ok(artist);
     }
-
-    [HttpGet("{id}/songs")]
-    public async Task<IActionResult> GetAllSongsFromArtist(string id)
+/// <summary>
+/// Getting artists by name
+/// </summary>
+    [HttpGet("nameToSearch/{name}")]
+    public async Task<IActionResult> GetArtistsByNameAsync([FromRoute]string name)
     {
-        var songs = await _artistService.GetAllSongsFromArtistAsync(id);
-        return Ok(songs);
-    }
-
-    [HttpGet("search")]
-    public async Task<IActionResult> GetArtistByName(string name)
-    {
-        var artists = await _artistService.GetArtistByNameAsync(name);
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return BadRequest("Artist name is required.");
+        }
+        var artists = await _artistService.GetArtistsByNameAsync(name);
+        if (artists == null || artists.Count == 0)
+        {
+            return NotFound(new { Message = "No artists found with the given name." });
+        }
         return Ok(artists);
     }
-
+/// <summary>
+/// Adding a new artist
+/// </summary>
+/// <param name="artist"></param>
+/// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> AddArtist([FromBody] ArtistModelDTO artist)
+    public async Task<IActionResult> AddArtist([FromRoute] ArtistModelDTO artist)
     {
         if (artist == null)
         {
