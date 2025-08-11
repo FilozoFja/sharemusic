@@ -106,6 +106,8 @@ namespace sharemusic.Service
                 if (item.Track is FullTrack track)
                 {
                     var existingSong = _musicDbContext.Songs.FirstOrDefault(s => s.SpotifyId == track.Id);
+                    var mainArtist = await GetOrCreateArtistAsync(track.Artists.First().Id);
+
                     if (existingSong == null)
                     {
                         existingSong = new SongModel
@@ -126,19 +128,51 @@ namespace sharemusic.Service
                     {
                         playlist.Songs.Add(existingSong);
                     }
+                    if (!mainArtist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
+                    {
+                        mainArtist.Songs.Add(existingSong);
+                    }
                 }
             }
 
             await _musicDbContext.SaveChangesAsync();
         }
 
+        public async Task<ArtistModel> GetOrCreateArtistAsync(string artistId)
+        {
+            var existingArtist = _musicDbContext.Artists.FirstOrDefault(a => a.SpotifyId == artistId);
+            if (existingArtist != null)
+            {
+                return existingArtist;
+            }
+
+            var spotify = await SetSpotifyDefaultRequest();
+            var fullArtist = await spotify.Artists.Get(artistId);
+
+            var newArtist = new ArtistModel
+            {
+                Id = Guid.NewGuid().ToString(),
+                SpotifyId = fullArtist.Id,
+                Name = fullArtist.Name,
+                ImageUrl = fullArtist.Images?.FirstOrDefault()?.Url,
+                Genres = fullArtist.Genres?.ToList() ?? new List<string?>(),
+                Songs = new List<SongModel>()
+            };
+
+            _musicDbContext.Artists.Add(newArtist);
+            await _musicDbContext.SaveChangesAsync();
+
+            return newArtist;
+        }
+
         public async Task<SpotifyClient> SetSpotifyDefaultRequest()
         {
             var token = await _tokenService.GetAccessTokenStringAsync();
             var config = SpotifyClientConfig.CreateDefault();
-            return new SpotifyClient(config.WithToken(token.AccessToken));;
+            return new SpotifyClient(config.WithToken(token.AccessToken)); ;
 
         }
 
+        
     }  
 }

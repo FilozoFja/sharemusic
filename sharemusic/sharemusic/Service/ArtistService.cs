@@ -6,6 +6,7 @@ using sharemusic.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
+using sharemusic.DTOs;
 
 namespace sharemusic.Service;
 
@@ -14,7 +15,8 @@ public class ArtistService : IArtistService
     private readonly MusicDbContext _musicDbContext;
     private readonly IMapper _mapper;
 
-    public ArtistService(MusicDbContext musicDbContext, IMapper mapper) {
+    public ArtistService(MusicDbContext musicDbContext, IMapper mapper)
+    {
         _musicDbContext = musicDbContext;
         _mapper = mapper;
     }
@@ -41,5 +43,15 @@ public class ArtistService : IArtistService
             return [];
         }
         return artists.Cast<ArtistShortModelDTO?>().ToList();
+    }
+    
+    public async Task AddArtistAsync(ArtistModelDTO artist)
+    {
+        if (artist == null)
+        {
+            throw new ArgumentNullException(nameof(artist));
+        }
+        _musicDbContext.Artists.Add(_mapper.Map<ArtistModel>(artist));
+        await _musicDbContext.SaveChangesAsync();
     }
 }
