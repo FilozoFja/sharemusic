@@ -24,7 +24,7 @@ namespace sharemusic.Service
 
         public async Task DownloadPlaylistFromUser()
         {
-            var token = await _tokenService.GetAccessTokenStringAsync();
+            var token = await _tokenService.GetAccessTokenAsync();
 
 
             var client = _httpClientFactory.CreateClient();
@@ -167,7 +167,7 @@ namespace sharemusic.Service
 
         public async Task<SpotifyClient> SetSpotifyDefaultRequest()
         {
-            var token = await _tokenService.GetAccessTokenStringAsync();
+            var token = await _tokenService.GetAccessTokenAsync();
             var config = SpotifyClientConfig.CreateDefault();
             return new SpotifyClient(config.WithToken(token.AccessToken)); ;
 

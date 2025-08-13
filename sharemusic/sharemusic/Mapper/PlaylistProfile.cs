@@ -18,6 +18,7 @@ public class PlaylistProfile : AutoMapper.Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.CoverImageUrl, opt => opt.MapFrom(src => src.CoverUrl))
+            .ForMember(dest => dest.SpotifyId, opt => opt.MapFrom(src => src.SpotifyId))
             .ReverseMap();
     }
 }

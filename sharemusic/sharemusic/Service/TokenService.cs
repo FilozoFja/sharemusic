@@ -33,10 +33,10 @@ namespace sharemusic.Service
             return await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
         }
 
-        public async Task<SpotifyTokenRequestModel> GetAccessTokenStringAsync()
+        public async Task<string> GetAccessTokenStringAsync()
         {
             var token = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
-            return string.IsNullOrEmpty(token?.AccessToken) ? throw new Exception("Access token is empty") : token;
+            return string.IsNullOrEmpty(token?.AccessToken) ? throw new Exception("Access token is empty") : token.AccessToken;
         }
 
         public async Task<bool> IsTokenValidAsync()

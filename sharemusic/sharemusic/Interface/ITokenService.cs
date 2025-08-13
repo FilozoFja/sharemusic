@@ -8,7 +8,7 @@ namespace sharemusic.Interface
         Task SaveTokenAsync(SpotifyTokenRequestModelDTO spotifyTokenRequestModel);
         Task<SpotifyTokenRequestModel?> GetAccessTokenAsync();
         Task UpdateTokenAsync(SpotifyTokenRequestModelDTO spotifyTokenRequestModel);
-        Task<SpotifyTokenRequestModel> GetAccessTokenStringAsync();
+        Task<string> GetAccessTokenStringAsync();
 
 
         Task<bool> IsTokenValidAsync();
