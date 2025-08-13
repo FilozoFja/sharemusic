@@ -26,17 +26,41 @@ namespace sharemusic.Service
         {
             var token = await _tokenService.GetAccessTokenAsync();
 
-
             var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.AccessToken);
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.AccessToken);
+
             var response = await client.GetAsync("https://api.spotify.com/v1/me/playlists");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests) // 429
+            {
+                if (response.Headers.TryGetValues("Retry-After", out var values))
+                {
+                    var retryAfterSeconds = int.Parse(values.First());
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"[Spotify API] Za dużo zapytań. Spróbuj ponownie za {retryAfterSeconds} sekund.");
+                    Console.ResetColor();
+
+                    await Task.Delay(retryAfterSeconds * 1000); // poczekaj przed ponowną próbą
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Spotify API] Za dużo zapytań, brak nagłówka Retry-After.");
+                    Console.ResetColor();
+                }
+                return; // zakończ lub tu można ponowić request
+            }
+
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error fetching playlists: {response.ReasonPhrase}");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error fetching playlists: {response.StatusCode} - {response.ReasonPhrase}");
+                Console.ResetColor();
+                return;
             }
+
             var data = await response.Content.ReadAsStringAsync();
-
-
             var playlists = JsonSerializer.Deserialize<SpotifyPlaylistsResponse>(data, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
@@ -48,9 +72,7 @@ namespace sharemusic.Service
                 {
                     try
                     {
-
                         var existingPlaylist = _musicDbContext.Playlists.FirstOrDefault(p => p.Name == playlist.Name);
-
                         if (existingPlaylist == null)
                         {
                             var newPlaylist = new PlaylistModel
@@ -66,14 +88,18 @@ namespace sharemusic.Service
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error in playlists {playlist.Name}: {ex.Message}");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Error in playlist {playlist.Name}: {ex.Message}");
+                        Console.ResetColor();
                     }
                 }
-                var saved = await _musicDbContext.SaveChangesAsync();
+                await _musicDbContext.SaveChangesAsync();
             }
             else
             {
-                throw new Exception("Your account is empty or there is unpredictable error.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Your account is empty or there is unpredictable error.");
+                Console.ResetColor();
             }
         }
 
@@ -106,7 +132,7 @@ namespace sharemusic.Service
                 if (item.Track is FullTrack track)
                 {
                     var existingSong = _musicDbContext.Songs.FirstOrDefault(s => s.SpotifyId == track.Id);
-                    var mainArtist = await GetOrCreateArtistAsync(track.Artists.First().Id);
+                    var mainArtist = await GetOrCreateArtistAsync(track.Artists.First().Id, spotify);
 
                     if (existingSong == null)
                     {
@@ -138,7 +164,7 @@ namespace sharemusic.Service
             await _musicDbContext.SaveChangesAsync();
         }
 
-        public async Task<ArtistModel> GetOrCreateArtistAsync(string artistId)
+        public async Task<ArtistModel> GetOrCreateArtistAsync(string artistId, SpotifyClient spotify )
         {
             var existingArtist = _musicDbContext.Artists.FirstOrDefault(a => a.SpotifyId == artistId);
             if (existingArtist != null)
@@ -146,7 +172,6 @@ namespace sharemusic.Service
                 return existingArtist;
             }
 
-            var spotify = await SetSpotifyDefaultRequest();
             var fullArtist = await spotify.Artists.Get(artistId);
 
             var newArtist = new ArtistModel

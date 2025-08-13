@@ -62,9 +62,15 @@ namespace sharemusic.Service
         public async Task UpdateTokenAsync(SpotifyTokenRequestModelDTO spotifyNewToken)
         {
             var oldToken = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
-            oldToken = _mapper.Map<SpotifyTokenRequestModel>(spotifyNewToken);
-            await _dbContext.SaveChangesAsync();
-            
+            if (oldToken != null)
+            {
+                _mapper.Map(spotifyNewToken, oldToken);
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("No existing token found to update.");
+            }
         }
     
     }

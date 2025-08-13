@@ -13,14 +13,14 @@ namespace sharemusic.Controllers
             _spotifyService = spotifyService;
         }
 
-        [HttpPost("downloadFromSpotify/")]
+        [HttpPost("playlist/getAll")]
         public async Task<IActionResult> GetWholePlaylistFromSpotify()
         {
             await _spotifyService.DownloadPlaylistFromUser();
             return Ok(new { message = "Playlists fetched successfully." });
         }
 
-        [HttpPost("downloadFromSpotify/{playlistId}")]
+        [HttpPost("playlist/{playlistId}/songs/getAll")]
         public async Task<IActionResult> DownloadDraftSongFromSpotifyPlaylisy(string playlistId)
         {
             await _spotifyService.DownloadSongsFromUserPlaylist(playlistId);
