@@ -19,17 +19,19 @@ public class PlaylistService : IPlaylistService
         _musicDbContext = musicDbContext;
         _mapper = mapper;
     }
-    public async Task AddPlaylist(FullPlaylist playlistToAdd)
+    public async Task AddPlaylistAsync(FullPlaylist playlistToAdd)
     {
         var playlist = _mapper.Map<PlaylistModel>(playlistToAdd);
         await _musicDbContext.Playlists.AddAsync(playlist);
         await _musicDbContext.SaveChangesAsync();
     }
-    public async Task AddPlaylist(PlaylistModelDTO playlistToAdd)
+    public async Task<PlaylistModel> AddPlaylistAsync(PlaylistModelDTO playlistToAdd)
     {
         var playlist = _mapper.Map<PlaylistModel>(playlistToAdd);
         await _musicDbContext.Playlists.AddAsync(playlist);
         await _musicDbContext.SaveChangesAsync();
+
+        return playlist;
     }
     public async Task AddSongToPlaylistAsync(int playlistId, int songId)
     {
@@ -80,18 +82,25 @@ public class PlaylistService : IPlaylistService
 
         return playlist;
     }
-    public async Task<List<PlaylistShortModelDTO?>> GetPlaylistByNameAsync(string name)
+    public async Task<List<PlaylistShortModelDTO>> GetPlaylistByNameAsync(string name)
     {
-        var playlists = await _musicDbContext.Playlists
-            .Where(p => p.Name.Contains(name))
-            .ToListAsync();
-
-        if (playlists == null || !playlists.Any())
+        if (string.IsNullOrWhiteSpace(name))
         {
-            throw new Exception("No playlists found with the specified name.");
+            throw new ArgumentException("Search term cannot be empty.", nameof(name));
         }
 
-        return [];
+        name = name.Trim();
+
+        var playlists = await _musicDbContext.Playlists
+            .Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{name.ToLower()}%"))
+            .ToListAsync();
+
+        if (playlists.Count == 0)
+        {
+            return new List<PlaylistShortModelDTO>();
+        }
+
+        return _mapper.Map<List<PlaylistShortModelDTO>>(playlists);
     }
     public async Task<List<PlaylistShortModelDTO>> GetAllPlaylistsAsync()
     {
@@ -106,7 +115,7 @@ public class PlaylistService : IPlaylistService
 
         return _mapper.Map<List<PlaylistShortModelDTO>>(playlists);
     }
-    public async Task UpdatePlaylistAsync(int id, PlaylistModelDTO updatedPlaylist)
+    public async Task<PlaylistModel> UpdatePlaylistAsync(int id, PlaylistModelDTO updatedPlaylist)
     {
         var playlist = await _musicDbContext.Playlists.FindAsync(id);
         if (playlist == null)
@@ -116,6 +125,18 @@ public class PlaylistService : IPlaylistService
 
         _mapper.Map(updatedPlaylist, playlist);
         _musicDbContext.Entry(playlist).State = EntityState.Modified;
+        await _musicDbContext.SaveChangesAsync();
+        return playlist;
+    }
+    public async Task DeletePlaylistAsync(int id)
+    {
+        var playlist = await _musicDbContext.Playlists.FindAsync(id);
+        if (playlist == null)
+        {
+            throw new Exception("Playlist not found.");
+        }
+
+        _musicDbContext.Playlists.Remove(playlist);
         await _musicDbContext.SaveChangesAsync();
     }
 }
