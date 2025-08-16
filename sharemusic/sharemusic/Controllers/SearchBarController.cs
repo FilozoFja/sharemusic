@@ -8,6 +8,12 @@ public class SearchBarController : ControllerBase
     private readonly IArtistService _artistService;
     private readonly ISongService _songService;
     private readonly IPlaylistService _playlistService;
+    public SearchBarController(IArtistService artistService, ISongService songService, IPlaylistService playlistService)
+    {
+        _artistService = artistService;
+        _songService = songService;
+        _playlistService = playlistService;
+    }
 
     [HttpGet]
     public async Task<ActionResult<SearchBarResponseDTO>> Search(string name, int take)
