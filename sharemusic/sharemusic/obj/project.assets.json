@@ -3855,32 +3855,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\korne\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/home/codespace/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\sharemusic.csproj",
+      "projectUniqueName": "/workspaces/sharemusic/sharemusic/sharemusic/sharemusic.csproj",
       "projectName": "sharemusic",
-      "projectPath": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\sharemusic.csproj",
-      "packagesPath": "C:\\Users\\korne\\.nuget\\packages\\",
-      "outputPath": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\obj\\",
+      "projectPath": "/workspaces/sharemusic/sharemusic/sharemusic/sharemusic.csproj",
+      "packagesPath": "/home/codespace/.nuget/packages/",
+      "outputPath": "/workspaces/sharemusic/sharemusic/sharemusic/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\korne\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/codespace/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3950,7 +3942,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.412/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

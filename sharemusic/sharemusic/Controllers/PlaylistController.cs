@@ -22,7 +22,7 @@ namespace sharemusic.Controller {
         {
             return await _playlistService.GetPlaylistByIdAsync(id);
         }
-/// <summary>
+/// <summary>W
 /// Gets a list of playlists by name.
 /// </summary>
         [HttpGet("playlist/{name}")]
@@ -49,7 +49,7 @@ namespace sharemusic.Controller {
             {
                 return BadRequest("Playlist data is null.");
             }
-            var playlist = await _playlistService.AddPlaylist(playlistToAdd);
+            var playlist = await _playlistService.AddPlaylistAsync(playlistToAdd);
             return Ok(playlist);
         }
 /// <summary>

@@ -5,7 +5,7 @@ namespace sharemusic.DTO.ArtistModel;
 public class ArtistShortModelDTO
 {
     [Key]
-    public string Id { get; set; }
+    public required string Id { get; set; }
     public required string SpotifyId { get; set; }
     public string? Name { get; set; }
     public string? ImageUrl { get; set; }

@@ -111,7 +111,7 @@ namespace sharemusic.Service
             var playlist = _musicDbContext.Playlists.FirstOrDefault(p => p.SpotifyId == playlistId);
             if (playlist == null)
             {
-                await _playlistService.AddPlaylist(playlistFull);
+                await _playlistService.AddPlaylistAsync(playlistFull);
             }
 
             var allTracks = new List<PlaylistTrack<IPlayableItem>>();

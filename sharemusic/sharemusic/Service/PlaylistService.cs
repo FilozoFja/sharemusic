@@ -82,7 +82,7 @@ public class PlaylistService : IPlaylistService
 
         return playlist;
     }
-    public async Task<List<PlaylistShortModelDTO>> GetPlaylistByNameAsync(string name)
+    public async Task<List<PlaylistShortModelDTO>> GetPlaylistByNameAsync(string name, int? take = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -91,17 +91,19 @@ public class PlaylistService : IPlaylistService
 
         name = name.Trim();
 
-        var playlists = await _musicDbContext.Playlists
-            .Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{name.ToLower()}%"))
-            .ToListAsync();
+        var query = _musicDbContext.Playlists
+            .Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{name.ToLower()}%"));
 
-        if (playlists.Count == 0)
+        if (take.HasValue)
         {
-            return new List<PlaylistShortModelDTO>();
+            query = query.Take(take.Value);
         }
+
+        var playlists = await query.ToListAsync();
 
         return _mapper.Map<List<PlaylistShortModelDTO>>(playlists);
     }
+
     public async Task<List<PlaylistShortModelDTO>> GetAllPlaylistsAsync()
     {
         var playlists = await _musicDbContext.Playlists

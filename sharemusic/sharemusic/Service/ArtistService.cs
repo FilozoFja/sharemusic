@@ -32,17 +32,22 @@ public class ArtistService : IArtistService
             .ToListAsync();
     }
 
-    public async Task<List<ArtistShortModelDTO?>> GetArtistsByNameAsync(string name)
+    public async Task<List<ArtistShortModelDTO>> GetArtistsByNameAsync(string name, int? take=null)
     {
-        var artists = await _musicDbContext.Artists
-            .Where(x => x.Name != null && x.Name.Contains(name))
-            .ProjectTo<ArtistShortModelDTO>(_mapper.ConfigurationProvider)
-            .ToListAsync();
-        if (artists == null || artists.Count == 0)
-        {
-            return new List<ArtistShortModelDTO?>();
+        if(string.IsNullOrEmpty(name)){
+            throw new ArgumentException("Search term cannot be empty.", nameof(name));
         }
-        return artists.Cast<ArtistShortModelDTO?>().ToList();
+
+        var query = _musicDbContext.Artists
+            .Where(x => !string.IsNullOrEmpty(x.Name) && EF.Functions.Like(x.Name.ToLower(), $"%{name.ToLower()}%"))
+            .ProjectTo<ArtistShortModelDTO>(_mapper.ConfigurationProvider);
+            
+        if (take.HasValue)
+        {
+            query = query.Take(take.Value);
+        }
+
+        return await query.ToListAsync();
     }
 
     public async Task AddArtistAsync(ArtistModelDTO artist)

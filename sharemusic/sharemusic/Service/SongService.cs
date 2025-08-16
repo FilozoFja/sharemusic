@@ -77,18 +77,19 @@ namespace sharemusic.Service
             return await _dbContext.Songs.FindAsync(id); ;
         }
 
-        public async Task<List<SongShortModelDTO>> GetSongByNameAsync(string name)
+        public async Task<List<SongShortModelDTO>> GetSongByNameAsync(string name, int? take = null)
         {
-            var songs = _dbContext.Songs
-                .Where(s => s.Title.Contains(name, StringComparison.OrdinalIgnoreCase))
-                .ToListAsync();
-            if (songs == null) { throw new Exception("No songs found with the given name."); }
-            return _mapper.Map<List<SongShortModelDTO>>(await songs);
+            var query = _dbContext.Songs
+                .Where(s => EF.Functions.Like(s.Title, $"%{name}%"));
+
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            var songs = await query.ToListAsync();
+
+            return _mapper.Map<List<SongShortModelDTO>>(songs);
         }
-
-
-
-
-
     }
 }
