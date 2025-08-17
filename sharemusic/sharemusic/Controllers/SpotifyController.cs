@@ -8,23 +8,27 @@ namespace sharemusic.Controllers
     public class SpotifyController : ControllerBase
     {
         private readonly ISpotifyService _spotifyService;
-        public SpotifyController(ISpotifyService spotifyService)
+        private readonly IPlaylistService _playlistService;
+        public SpotifyController(ISpotifyService spotifyService, IPlaylistService playlistService)
         {
             _spotifyService = spotifyService;
+            _playlistService = playlistService;
         }
 
         [HttpPost("playlist/getAll")]
         public async Task<IActionResult> GetWholePlaylistFromSpotify()
         {
             await _spotifyService.DownloadPlaylistFromUser();
-            return Ok(new { message = "Playlists fetched successfully." });
+            var playlists = await _playlistService.GetAllPlaylistsAsync();
+            return Ok(playlists);
         }
 
         [HttpPost("playlist/{playlistId}/songs/getAll")]
         public async Task<IActionResult> DownloadDraftSongFromSpotifyPlaylisy(string playlistId)
         {
             await _spotifyService.DownloadSongsFromUserPlaylist(playlistId);
-            return Ok(new { message = "Songs downloaded successfully." });
+            var playlist = await _playlistService.GetPlaylistBySpotifyIdAsync(playlistId);
+            return Ok(playlist);
         }
     }
 }

@@ -6,12 +6,10 @@ public class ArtistModel
 {
     [Key]
     [Required]
-    public required string Id { get; set; }
-    [Required]
     public required string SpotifyId { get; set; }
     public string? Name { get; set; }
     public string? ImageUrl { get; set; }
     public List<string?> Genres { get; set; } = [];
 
-    public List<SongModel> Songs { get; set; } = new();
+    public List<SongModel> Songs { get; set; } = new List<SongModel>();
 }

@@ -31,6 +31,24 @@ namespace sharemusic.Controller {
             return await _playlistService.GetPlaylistByNameAsync(name);
         }
 /// <summary>
+/// Gets a playlist short model by its Spotify ID.
+/// </summary>
+
+        [HttpGet("playlist/spotify/{spotifyId}")]
+        public async Task<PlaylistShortModelDTO> GetPlaylistBySpotifyIdAsync(string spotifyId)
+        {
+            if(string.IsNullOrEmpty(spotifyId))
+            {
+                throw new ArgumentException("Spotify ID cannot be null or empty.", nameof(spotifyId));
+            }
+            var playlist = await _playlistService.GetPlaylistBySpotifyIdAsync(spotifyId);
+            if (playlist == null)
+            {
+                throw new KeyNotFoundException($"Playlist with Spotify ID '{spotifyId}' not found.");
+            }
+            return playlist;
+        }
+/// <summary>
 /// Gets all playlists short model;
 /// </summary>
 /// <returns></returns>

@@ -9,6 +9,7 @@ public interface IArtistService
     public Task<ArtistModel?> GetArtistAsync(string id);
     public Task<List<ArtistShortModelDTO>> GetAllSongsFromArtistAsync(string id);
     public Task<List<ArtistShortModelDTO?>> GetArtistsByNameAsync(string name, int? take=null);
+    public Task<ArtistShortModelDTO> GetArtistBySpotifyIdAsync(string id);
     
     public Task AddArtistAsync(ArtistModelDTO artist);
     public Task DeleteArtistAsync(string id);

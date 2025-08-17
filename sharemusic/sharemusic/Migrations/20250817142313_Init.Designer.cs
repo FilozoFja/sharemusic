@@ -11,8 +11,8 @@ using sharemusic.Db;
 namespace sharemusic.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    [Migration("20250804181719_minorchangessss")]
-    partial class minorchangessss
+    [Migration("20250817142313_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,10 +20,31 @@ namespace sharemusic.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
 
+            modelBuilder.Entity("sharemusic.Models.ArtistModel", b =>
+                {
+                    b.Property<string>("SpotifyId")
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("Genres")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("SpotifyId");
+
+                    b.ToTable("Artists");
+                });
+
             modelBuilder.Entity("sharemusic.Models.PlaylistModel", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CoverUrl")
                         .HasColumnType("TEXT");
@@ -33,6 +54,9 @@ namespace sharemusic.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SpotifyId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -52,28 +76,31 @@ namespace sharemusic.Migrations
                     b.Property<string>("Artist")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<string>("ArtistModelSpotifyId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("ArtistSpotifyId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CoverImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDraft")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsExplicit")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("LocalCoverPath")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("LocalSongPath")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PlaylistModelId")
+                    b.Property<int?>("PlaylistModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Popularity")
+                    b.Property<int?>("SongLengthInSeconds")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SpotifyId")
@@ -88,6 +115,8 @@ namespace sharemusic.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ArtistModelSpotifyId");
+
                     b.HasIndex("PlaylistModelId");
 
                     b.ToTable("Songs");
@@ -95,7 +124,12 @@ namespace sharemusic.Migrations
 
             modelBuilder.Entity("sharemusic.Models.SpotifyTokenRequestModel", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("AccessToken")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ExpiresIn")
@@ -114,16 +148,25 @@ namespace sharemusic.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AccessToken");
+                    b.HasKey("Id");
 
                     b.ToTable("SpotifyTokens");
                 });
 
             modelBuilder.Entity("sharemusic.Models.SongModel", b =>
                 {
+                    b.HasOne("sharemusic.Models.ArtistModel", null)
+                        .WithMany("Songs")
+                        .HasForeignKey("ArtistModelSpotifyId");
+
                     b.HasOne("sharemusic.Models.PlaylistModel", null)
                         .WithMany("Songs")
                         .HasForeignKey("PlaylistModelId");
+                });
+
+            modelBuilder.Entity("sharemusic.Models.ArtistModel", b =>
+                {
+                    b.Navigation("Songs");
                 });
 
             modelBuilder.Entity("sharemusic.Models.PlaylistModel", b =>

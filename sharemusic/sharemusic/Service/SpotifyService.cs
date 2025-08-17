@@ -4,6 +4,8 @@ using sharemusic.Interface;
 using sharemusic.Models;
 using SpotifyAPI.Web;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+
 namespace sharemusic.Service
 {
     public class SpotifyService : ISpotifyService
@@ -30,9 +32,11 @@ namespace sharemusic.Service
             client.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.AccessToken);
 
+            await Task.Delay(500);
+
             var response = await client.GetAsync("https://api.spotify.com/v1/me/playlists");
 
-            if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests) // 429
+            if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
             {
                 if (response.Headers.TryGetValues("Retry-After", out var values))
                 {
@@ -41,15 +45,16 @@ namespace sharemusic.Service
                     Console.WriteLine($"[Spotify API] Za dużo zapytań. Spróbuj ponownie za {retryAfterSeconds} sekund.");
                     Console.ResetColor();
 
-                    await Task.Delay(retryAfterSeconds * 1000); // poczekaj przed ponowną próbą
+                    await Task.Delay(retryAfterSeconds * 1000);
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[Spotify API] Za dużo zapytań, brak nagłówka Retry-After.");
                     Console.ResetColor();
+                    await Task.Delay(60000);
                 }
-                return; // zakończ lub tu można ponowić request
+                return;
             }
 
             if (!response.IsSuccessStatusCode)
@@ -72,7 +77,7 @@ namespace sharemusic.Service
                 {
                     try
                     {
-                        var existingPlaylist = _musicDbContext.Playlists.FirstOrDefault(p => p.Name == playlist.Name);
+                        var existingPlaylist = _musicDbContext.Playlists.FirstOrDefault(p => p.SpotifyId == playlist.Id);
                         if (existingPlaylist == null)
                         {
                             var newPlaylist = new PlaylistModel
@@ -85,6 +90,8 @@ namespace sharemusic.Service
                             };
                             _musicDbContext.Playlists.Add(newPlaylist);
                         }
+
+                        await Task.Delay(100);
                     }
                     catch (Exception ex)
                     {
@@ -106,13 +113,28 @@ namespace sharemusic.Service
         public async Task DownloadSongsFromUserPlaylist(string playlistId)
         {
             SpotifyClient spotify = await SetSpotifyDefaultRequest();
+
+            await Task.Delay(500);
+
             var playlistFull = await spotify.Playlists.Get(playlistId);
 
-            var playlist = _musicDbContext.Playlists.FirstOrDefault(p => p.SpotifyId == playlistId);
+            // Pobierz playlistę z Include dla Songs
+            var playlist = await _musicDbContext.Playlists
+                .Include(p => p.Songs)
+                .FirstOrDefaultAsync(p => p.SpotifyId == playlistId);
+
             if (playlist == null)
             {
                 await _playlistService.AddPlaylistAsync(playlistFull);
+
+                // Pobierz ponownie po dodaniu
+                playlist = await _musicDbContext.Playlists
+                    .Include(p => p.Songs)
+                    .FirstOrDefaultAsync(p => p.SpotifyId == playlistId);
             }
+
+            // Upewnij się, że kolekcja Songs nie jest null
+            if (playlist.Songs == null) playlist.Songs = new List<SongModel>();
 
             var allTracks = new List<PlaylistTrack<IPlayableItem>>();
             var page = playlistFull.Tracks;
@@ -124,6 +146,8 @@ namespace sharemusic.Service
                     allTracks.AddRange(page.Items);
                 }
                 if (page.Next == null) break;
+
+                await Task.Delay(300);
                 page = await spotify.NextPage(page);
             }
 
@@ -132,6 +156,8 @@ namespace sharemusic.Service
                 if (item.Track is FullTrack track)
                 {
                     var existingSong = _musicDbContext.Songs.FirstOrDefault(s => s.SpotifyId == track.Id);
+
+                    await Task.Delay(200);
                     var mainArtist = await GetOrCreateArtistAsync(track.Artists.First().Id, spotify);
 
                     if (existingSong == null)
@@ -141,7 +167,7 @@ namespace sharemusic.Service
                             SpotifyId = track.Id,
                             Title = track.Name,
                             Artist = string.Join(", ", track.Artists.Select(a => a.Name)),
-                            ArtistId = track.Artists.FirstOrDefault()?.Id,
+                            ArtistSpotifyId = track.Artists.FirstOrDefault()?.Id,
                             Album = track.Album?.Name,
                             CoverImageUrl = track.Album?.Images?.FirstOrDefault()?.Url,
                             IsDraft = true,
@@ -150,23 +176,30 @@ namespace sharemusic.Service
                         _musicDbContext.Songs.Add(existingSong);
                     }
 
-                    if (playlist != null && playlist.Songs != null && !playlist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
+                    if (!playlist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
                     {
                         playlist.Songs.Add(existingSong);
                     }
+
                     if (!mainArtist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
                     {
                         mainArtist.Songs.Add(existingSong);
+                        await _musicDbContext.SaveChangesAsync();
                     }
                 }
             }
 
             await _musicDbContext.SaveChangesAsync();
+            Console.WriteLine($"Zakończono przetwarzanie playlisty: {playlist.Name}. Piosenek: {playlist.Songs.Count}");
         }
 
-        public async Task<ArtistModel> GetOrCreateArtistAsync(string artistId, SpotifyClient spotify )
+        public async Task<ArtistModel> GetOrCreateArtistAsync(string artistId, SpotifyClient spotify)
         {
-            var existingArtist = _musicDbContext.Artists.FirstOrDefault(a => a.SpotifyId == artistId);
+            // Pobierz z Include dla Songs
+            var existingArtist = await _musicDbContext.Artists
+                .Include(a => a.Songs)
+                .FirstOrDefaultAsync(a => a.SpotifyId == artistId);
+
             if (existingArtist != null)
             {
                 return existingArtist;
@@ -176,7 +209,6 @@ namespace sharemusic.Service
 
             var newArtist = new ArtistModel
             {
-                Id = Guid.NewGuid().ToString(),
                 SpotifyId = fullArtist.Id,
                 Name = fullArtist.Name,
                 ImageUrl = fullArtist.Images?.FirstOrDefault()?.Url,
@@ -187,6 +219,7 @@ namespace sharemusic.Service
             _musicDbContext.Artists.Add(newArtist);
             await _musicDbContext.SaveChangesAsync();
 
+            Console.WriteLine($"Utworzono nowego artystę: {newArtist.Name}");
             return newArtist;
         }
 
@@ -194,10 +227,7 @@ namespace sharemusic.Service
         {
             var token = await _tokenService.GetAccessTokenAsync();
             var config = SpotifyClientConfig.CreateDefault();
-            return new SpotifyClient(config.WithToken(token.AccessToken)); ;
-
+            return new SpotifyClient(config.WithToken(token.AccessToken));
         }
-
-        
-    }  
+    }
 }

@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using sharemusic.Interface;
 
 namespace sharemusic.Controller;
-
+[Route("api/[controller]")]
+[ApiController]
 public class SearchBarController : ControllerBase
 {
     private readonly IArtistService _artistService;

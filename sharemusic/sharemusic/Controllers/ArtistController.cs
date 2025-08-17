@@ -3,6 +3,7 @@ namespace sharemusic.Controllers;
 using sharemusic.Interface;
 using sharemusic.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using sharemusic.Db;
 
 [Route("api/artists")]
 [ApiController]
@@ -14,18 +15,31 @@ public class ArtistController : ControllerBase
     {
         _artistService = artistService;
     }
-/// <summary>
-///  Gettings artist by id
-/// </summary>
+    /// <summary>
+    ///  Gettings artist by id
+    /// </summary>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetArtist([FromRoute]string id)
+    public async Task<IActionResult> GetArtist([FromRoute] string id)
     {
         if (string.IsNullOrWhiteSpace(id))
-        {
             return BadRequest("Artist ID is required.");
+
+        var artist = _artistService.GetArtistAsync(id);
+
+        if (artist == null)
+            return NotFound(new { Message = "Artist not found." });
+
+        return Ok(artist);
+    }
+    [HttpGet("spotify/{spotifyId}")]
+    public async Task<IActionResult> GetArtistBySpotifyId(string spotifyId)
+    {
+        if (string.IsNullOrWhiteSpace(spotifyId))
+        {
+            return BadRequest("Spotify ID is required.");
         }
 
-        var artist = await _artistService.GetArtistAsync(id);
+        var artist = await _artistService.GetArtistBySpotifyIdAsync(spotifyId);
         if (artist == null)
         {
             return NotFound(new { Message = "Artist not found." });
@@ -64,4 +78,5 @@ public class ArtistController : ControllerBase
         await _artistService.AddArtistAsync(artist);
         return CreatedAtAction(nameof(GetArtist), new { id = artist.Id }, artist);
     }
+
 }

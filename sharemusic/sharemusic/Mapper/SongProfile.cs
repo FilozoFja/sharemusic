@@ -15,7 +15,7 @@ namespace sharemusic.Mapper
                 .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
                 .ForMember(dest => dest.Album, opt => opt.MapFrom(src => src.Album))
                 .ForMember(dest => dest.IsDraft, opt => opt.MapFrom(src => src.IsDraft))
-                .ForMember(dest => dest.ArtistId, opt => opt.MapFrom(src => src.ArtistId))
+                .ForMember(dest => dest.ArtistSpotifyId, opt => opt.MapFrom(src => src.ArtistSpotifyId))
                 .ForMember(dest => dest.LocalSongPath, opt => opt.MapFrom(src => src.LocalSongPath))
                 .ForMember(dest => dest.ReleaseDate, opt => opt.MapFrom(src => src.ReleaseDate))
                 .ForMember(dest => dest.SongLengthInSeconds, opt => opt.MapFrom(src => src.SongLengthInSeconds))

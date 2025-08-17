@@ -45,7 +45,7 @@ namespace sharemusic.Controllers
             return Ok(await _songService.GetAllSongsAsync());
         }
         [HttpGet("search/song/{name}")]
-        public async Task<IActionResult> SearchSongsAsync([FromQuery] string name)
+        public async Task<IActionResult> SearchSongsAsync(string name)
         {
             return Ok(await _songService.GetSongByNameAsync(name));
         }

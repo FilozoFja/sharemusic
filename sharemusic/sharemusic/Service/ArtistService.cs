@@ -22,12 +22,14 @@ public class ArtistService : IArtistService
     }
     public async Task<ArtistModel?> GetArtistAsync(string id)
     {
-        return await _musicDbContext.Artists.FindAsync(id);
+        return await _musicDbContext.Artists
+            .Include(a => a.Songs)
+            .FirstOrDefaultAsync(a => a.SpotifyId == id);
     }
 
     public async Task<List<ArtistShortModelDTO>> GetAllSongsFromArtistAsync(string id)
     {
-        return await _musicDbContext.Songs.Where(x => x.ArtistId == id)
+        return await _musicDbContext.Songs.Where(x => x.ArtistSpotifyId == id)
             .ProjectTo<ArtistShortModelDTO>(_mapper.ConfigurationProvider)
             .ToListAsync();
     }
@@ -92,5 +94,23 @@ public class ArtistService : IArtistService
         await _musicDbContext.SaveChangesAsync();
 
         return _mapper.Map<ArtistModelDTO>(artist);
+    }
+
+    public async Task<ArtistShortModelDTO> GetArtistBySpotifyIdAsync(string id)
+    {
+
+       if (string.IsNullOrEmpty(id))
+        {
+            throw new ArgumentException("Spotify ID cannot be null or empty.", nameof(id));
+        }
+       var artist = await _musicDbContext.Artists
+            .Where(x => x.SpotifyId == id)
+            .ProjectTo<ArtistShortModelDTO>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
+        if (artist == null)
+        {
+            throw new ArgumentException("Artist doesnt exist.");
+        }
+        return artist;
     }
 }

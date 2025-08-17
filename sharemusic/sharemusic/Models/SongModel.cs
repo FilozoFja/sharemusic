@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public required string Title { get; set; }
         public string? Artist { get; set; }
-        public string? ArtistId { get; set; }
+        public string? ArtistSpotifyId { get; set; }
         public string? Album { get; set; }
         public bool IsDraft { get; set; }
         public string? CoverImageUrl { get; set; }          
@@ -26,5 +26,6 @@
 
         public string DisplayArtist => Artist ?? "Nieznany artysta";
         public string DisplayAlbum => Album ?? "Nieznany album";
+
     }
 }

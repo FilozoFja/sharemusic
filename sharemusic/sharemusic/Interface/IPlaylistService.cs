@@ -14,6 +14,7 @@ namespace sharemusic.Interface
         public Task<PlaylistModel> GetPlaylistByIdAsync(int id);
         public Task<List<PlaylistShortModelDTO>> GetAllPlaylistsAsync();
         public Task<List<PlaylistShortModelDTO>> GetPlaylistByNameAsync(string name, int? take = null);
+        public Task<PlaylistShortModelDTO> GetPlaylistBySpotifyIdAsync(string spotifyId);
         public Task<PlaylistModel> UpdatePlaylistAsync(int id, PlaylistModelDTO updatedPlaylist);
         public Task DeletePlaylistAsync(int id);
     }

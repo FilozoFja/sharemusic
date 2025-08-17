@@ -141,4 +141,22 @@ public class PlaylistService : IPlaylistService
         _musicDbContext.Playlists.Remove(playlist);
         await _musicDbContext.SaveChangesAsync();
     }
+
+    public async Task<PlaylistShortModelDTO> GetPlaylistBySpotifyIdAsync(string spotifyId)
+    {
+        Console.WriteLine($"Looking for playlist with SpotifyId: {spotifyId}");
+
+        var playlist = await _musicDbContext.Playlists
+            .Include(p => p.Songs)
+            .FirstOrDefaultAsync(p => p.SpotifyId == spotifyId);
+
+        Console.WriteLine($"Found playlist: {playlist?.Name}, Songs count: {playlist?.Songs?.Count}");
+
+        if (playlist == null)
+        {
+            throw new Exception($"Playlist with SpotifyId '{spotifyId}' not found.");
+        }
+
+        return _mapper.Map<PlaylistShortModelDTO>(playlist);
+    }
 }

@@ -55,7 +55,7 @@ namespace sharemusic.Service
             song.IsDraft = songDTO.IsDraft != null ? songDTO.IsDraft.Value : true;
             song.SongLengthInSeconds = songDTO.SongLengthInSeconds;
             song.LocalSongPath = songDTO.LocalSongPath;
-            song.ArtistId = songDTO.ArtistId;
+            song.ArtistSpotifyId = songDTO.ArtistSpotifyId;
             song.CoverImageUrl = songDTO.CoverImageUrl;
             song.ReleaseDate = songDTO.ReleaseDate;
             _dbContext.Entry(song).State = EntityState.Modified;

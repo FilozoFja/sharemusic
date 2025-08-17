@@ -19,7 +19,7 @@ namespace sharemusic.Migrations
 
             modelBuilder.Entity("sharemusic.Models.ArtistModel", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("SpotifyId")
                         .HasColumnType("TEXT");
 
                     b.PrimitiveCollection<string>("Genres")
@@ -32,11 +32,7 @@ namespace sharemusic.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("SpotifyId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
+                    b.HasKey("SpotifyId");
 
                     b.ToTable("Artists");
                 });
@@ -77,10 +73,10 @@ namespace sharemusic.Migrations
                     b.Property<string>("Artist")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ArtistId")
+                    b.Property<string>("ArtistModelSpotifyId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ArtistModelId")
+                    b.Property<string>("ArtistSpotifyId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CoverImageUrl")
@@ -116,7 +112,7 @@ namespace sharemusic.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArtistModelId");
+                    b.HasIndex("ArtistModelSpotifyId");
 
                     b.HasIndex("PlaylistModelId");
 
@@ -158,7 +154,7 @@ namespace sharemusic.Migrations
                 {
                     b.HasOne("sharemusic.Models.ArtistModel", null)
                         .WithMany("Songs")
-                        .HasForeignKey("ArtistModelId");
+                        .HasForeignKey("ArtistModelSpotifyId");
 
                     b.HasOne("sharemusic.Models.PlaylistModel", null)
                         .WithMany("Songs")

@@ -4,8 +4,8 @@ using sharemusic.DTO.PlaylistModel;
 using sharemusic.DTO.SongModel;
 public class SearchBarResponseDTO
 {
-    public List<ArtistShortModelDTO> Artist;
-    public List<PlaylistShortModelDTO> Playlists;
-    public List<SongShortModelDTO> Songs;
+    public List<ArtistShortModelDTO> Artist { get; set; }
+    public List<PlaylistShortModelDTO> Playlists { get; set; }
+    public List<SongShortModelDTO> Songs { get; set; }
 
 }

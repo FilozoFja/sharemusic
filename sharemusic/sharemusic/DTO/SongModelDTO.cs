@@ -26,7 +26,7 @@ namespace sharemusic.DTO
 
         public int? SongLengthInSeconds { get; set; }
 
-        public string? ArtistId { get; set; }
+        public string? ArtistSpotifyId { get; set; }
         
         public DateTime? ReleaseDate { get; set; }
 
