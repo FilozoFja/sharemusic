@@ -7,5 +7,6 @@ namespace sharemusic.Controllers
     [ApiController]
     public class ListeningHistoryController : ControllerBase
     {
+
     }
 }

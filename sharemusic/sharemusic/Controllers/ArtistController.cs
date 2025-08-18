@@ -3,7 +3,6 @@ namespace sharemusic.Controllers;
 using sharemusic.Interface;
 using sharemusic.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using sharemusic.Db;
 
 [Route("api/artists")]
 [ApiController]

@@ -5,7 +5,6 @@ namespace sharemusic.Models
     public class SongModel
     {
         [Key]
-        public int Id { get; set; }
         public required string SpotifyId { get; set; }
         public required string Title { get; set; }
         public string? Artist { get; set; }

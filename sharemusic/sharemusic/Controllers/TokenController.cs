@@ -14,7 +14,9 @@ namespace sharemusic.Controllers
             _tokenService = tokenService ?? throw new ArgumentNullException(nameof(_tokenService));
         }
 
-
+        /// <summary>
+        /// Saving token to database
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> SaveToken(SpotifyTokenRequestModelDTO spotifyTokenRequestModelDTO)
         {
@@ -31,6 +33,9 @@ namespace sharemusic.Controllers
             }
         }
 
+        /// <summary>
+        /// Getting token from database
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetToken()
         {
@@ -46,6 +51,9 @@ namespace sharemusic.Controllers
             }
         }
 
+        /// <summary>
+        /// Getting only token string from database
+        /// </summary>
         [HttpGet("GetTokensString")]
         public async Task<IActionResult> GetTokenString()
         {
@@ -60,6 +68,9 @@ namespace sharemusic.Controllers
             }
         }
 
+        /// <summary>
+        /// Checking is token valid
+        /// </summary>
         [HttpGet("IsTokenvalid")]
         public async Task<IActionResult> IsTokenValid()
         {
@@ -74,6 +85,9 @@ namespace sharemusic.Controllers
             }
         }
 
+        /// <summary>
+        /// Deleting token
+        /// </summary>
         [HttpDelete]
         public async Task<IActionResult> DeleteToken()
         {
@@ -88,6 +102,9 @@ namespace sharemusic.Controllers
             }
         }
 
+        /// <summary>
+        /// Updating token in database
+        /// </summary>
         [HttpPut]
         public async Task<IActionResult> UpdateTokenAsync(SpotifyTokenRequestModelDTO spotifyTokenRequestModelDTO)
         {

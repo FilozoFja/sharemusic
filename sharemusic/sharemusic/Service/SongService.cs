@@ -17,10 +17,12 @@ namespace sharemusic.Service
             _dbContext = dbContext;
             _mapper = mapper;
         }
-
-        public async Task AddSongLengthAndURLAsync(int id, int songLengthInSeconds, string url)
+        /// <summary>
+        /// Set location and song lenght manually.
+        /// </summary>
+        public async Task AddSongLengthAndURLAsync(string spotifyId, int songLengthInSeconds, string url)
         {
-            var song = await GetSongByIdAsync(id);
+            var song = await GetSongBySpotifyIdAsync(spotifyId);
             if (song != null)
             {
                 song.SongLengthInSeconds = songLengthInSeconds;
@@ -30,20 +32,24 @@ namespace sharemusic.Service
                 await _dbContext.SaveChangesAsync();
             }
         }
-
-        public async Task DeleteSongAsync(int id)
+        /// <summary>
+        /// Delete song by spotify ID.
+        /// </summary>
+        public async Task DeleteSongAsync(string spotifyId)
         {
-            var song = await _dbContext.Songs.FindAsync(id);
+            var song = await _dbContext.Songs.FindAsync(spotifyId);
             if (song != null)
             {
                 _dbContext.Songs.Remove(song);
                 await _dbContext.SaveChangesAsync();
             }
         }
-
-        public async Task EditSongAsync(SongModelDTO songDTO, int id)
+        /// <summary>
+        /// Edit song details by spotify ID.
+        /// </summary>
+        public async Task EditSongAsync(SongModelDTO songDTO, string spotifyId)
         {
-            var song = await GetSongByIdAsync(id);
+            var song = await GetSongBySpotifyIdAsync(spotifyId);
             if (song == null)
             {
                 throw new Exception("Song not found.");
@@ -61,7 +67,9 @@ namespace sharemusic.Service
             _dbContext.Entry(song).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
-
+        /// <summary>
+        /// Getting all songs.
+        /// </summary>
         public async Task<List<SongShortModelDTO>> GetAllSongsAsync()
         {
             var songs = await _dbContext.Songs.ToListAsync();
@@ -71,13 +79,22 @@ namespace sharemusic.Service
             }
             return _mapper.Map<List<SongShortModelDTO>>(songs);
         }
-
-        public async Task<SongModel?> GetSongByIdAsync(int id)
+        /// <summary>
+        /// Get song by spotify ID.
+        /// </summary>
+        public async Task<SongModel> GetSongBySpotifyIdAsync(string spotifyId)
         {
-            return await _dbContext.Songs.FindAsync(id); ;
+            var song = await _dbContext.Songs.FindAsync(spotifyId);
+            if (song == null)
+            {
+                throw new Exception("Song not found.");
+            }
+            return song;
         }
-
-        public async Task<List<SongShortModelDTO>> GetSongByNameAsync(string name, int? take = null)
+        /// <summary>
+        /// Getting songs by name. 
+        /// </summary>
+        public async Task<List<SongShortModelDTO>> GetSongsByNameAsync(string name, int? take = null)
         {
             var query = _dbContext.Songs
                 .Where(s => EF.Functions.Like(s.Title, $"%{name}%"));
