@@ -1,11 +1,14 @@
+using sharemusic.DTO;
+using sharemusic.Models;
+
 namespace sharemusic.DTOs
 {
     public class ArtistModelDTO
     {
-        public string Id { get; set; } = string.Empty;
-        public string SpotifyId { get; set; } = string.Empty;
+        public required string SpotifyId { get; set; }
         public string? Name { get; set; }
         public string? ImageUrl { get; set; }
-        public List<string?> Genres { get; set; } = new();
+        public List<string?> Genres { get; set; } = [];
+        public List<SongModel> Songs { get; set; } = [];
     }
 }

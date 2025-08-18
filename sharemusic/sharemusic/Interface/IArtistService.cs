@@ -6,12 +6,8 @@ namespace sharemusic.Interface;
 
 public interface IArtistService
 {
-    public Task<ArtistModel?> GetArtistAsync(string id);
     public Task<List<ArtistShortModelDTO>> GetAllSongsFromArtistAsync(string id);
     public Task<List<ArtistShortModelDTO?>> GetArtistsByNameAsync(string name, int? take=null);
-    public Task<ArtistShortModelDTO> GetArtistBySpotifyIdAsync(string id);
-    
-    public Task AddArtistAsync(ArtistModelDTO artist);
-    public Task DeleteArtistAsync(string id);
-    public Task<ArtistModelDTO> UpdateArtistAsync(string id, ArtistModelDTO artistDto);
+    public Task<ArtistModelDTO> GetArtistBySpotifyIdAsync(string id);
+    public Task<ArtistModel> UpdateArtistAsync(string id, ArtistModelDTO artistDto);
 }

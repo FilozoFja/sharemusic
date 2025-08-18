@@ -15,23 +15,11 @@ public class ArtistController : ControllerBase
     {
         _artistService = artistService;
     }
+
     /// <summary>
-    ///  Gettings artist by id
+    ///  Get artist by spotify id
     /// </summary>
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetArtist([FromRoute] string id)
-    {
-        if (string.IsNullOrWhiteSpace(id))
-            return BadRequest("Artist ID is required.");
-
-        var artist = _artistService.GetArtistAsync(id);
-
-        if (artist == null)
-            return NotFound(new { Message = "Artist not found." });
-
-        return Ok(artist);
-    }
-    [HttpGet("spotify/{spotifyId}")]
+    [HttpGet("{spotifyId}")]
     public async Task<IActionResult> GetArtistBySpotifyId(string spotifyId)
     {
         if (string.IsNullOrWhiteSpace(spotifyId))
@@ -46,9 +34,9 @@ public class ArtistController : ControllerBase
         }
         return Ok(artist);
     }
-/// <summary>
-/// Getting artists by name
-/// </summary>
+    /// <summary>
+    /// Getting artists by name
+    /// </summary>
     [HttpGet("nameToSearch/{name}")]
     public async Task<IActionResult> GetArtistsByNameAsync([FromRoute]string name)
     {
@@ -63,20 +51,18 @@ public class ArtistController : ControllerBase
         }
         return Ok(artists);
     }
-/// <summary>
-/// Adding a new artist
-/// </summary>
-/// <param name="artist"></param>
-/// <returns></returns>
-    [HttpPost]
-    public async Task<IActionResult> AddArtist([FromRoute] ArtistModelDTO artist)
+    /// <summary>
+    /// Update artist information by spotify id
+    /// </summary>
+    [HttpPut]
+    public async Task<IActionResult> UpdateArtistAsync([FromBody] ArtistModelDTO artistDto)
     {
-        if (artist == null)
+        if (artistDto == null || string.IsNullOrWhiteSpace(artistDto.SpotifyId))
         {
             return BadRequest("Artist data is required.");
         }
-        await _artistService.AddArtistAsync(artist);
-        return CreatedAtAction(nameof(GetArtist), new { id = artist.Id }, artist);
+        var updatedArtist = await _artistService.UpdateArtistAsync(artistDto.SpotifyId, artistDto);
+        return Ok(updatedArtist);
     }
 
 }
