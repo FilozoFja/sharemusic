@@ -17,6 +17,69 @@ namespace sharemusic.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
 
+            modelBuilder.Entity("sharemusic.Models.ArtistModel", b =>
+                {
+                    b.Property<string>("SpotifyId")
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("Genres")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("SpotifyId");
+
+                    b.ToTable("Artists");
+                });
+
+            modelBuilder.Entity("sharemusic.Models.GenreModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ListeningHistoryModelId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ListeningHistoryModelId");
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("sharemusic.Models.ListeningHistoryModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SongSpotifyId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlaylistId");
+
+                    b.HasIndex("SongSpotifyId");
+
+                    b.ToTable("ListeningHistory");
+                });
+
             modelBuilder.Entity("sharemusic.Models.PlaylistModel", b =>
                 {
                     b.Property<int>("Id")
@@ -33,8 +96,9 @@ namespace sharemusic.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SongId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("SpotifyId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -43,9 +107,8 @@ namespace sharemusic.Migrations
 
             modelBuilder.Entity("sharemusic.Models.SongModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("SpotifyId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Album")
                         .HasColumnType("TEXT");
@@ -53,20 +116,23 @@ namespace sharemusic.Migrations
                     b.Property<string>("Artist")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ArtistModelSpotifyId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ArtistSpotifyId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CoverImageUrl")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("GenreModelId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDraft")
                         .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsExplicit")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("LocalCoverPath")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("LocalSongPath")
                         .HasColumnType("TEXT");
@@ -74,11 +140,11 @@ namespace sharemusic.Migrations
                     b.Property<int?>("PlaylistModelId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Popularity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SpotifyId")
+                    b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("SongLengthInSeconds")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -87,7 +153,11 @@ namespace sharemusic.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("SpotifyId");
+
+                    b.HasIndex("ArtistModelSpotifyId");
+
+                    b.HasIndex("GenreModelId");
 
                     b.HasIndex("PlaylistModelId");
 
@@ -96,7 +166,12 @@ namespace sharemusic.Migrations
 
             modelBuilder.Entity("sharemusic.Models.SpotifyTokenRequestModel", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("AccessToken")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ExpiresIn")
@@ -115,16 +190,65 @@ namespace sharemusic.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AccessToken");
+                    b.HasKey("Id");
 
                     b.ToTable("SpotifyTokens");
                 });
 
+            modelBuilder.Entity("sharemusic.Models.GenreModel", b =>
+                {
+                    b.HasOne("sharemusic.Models.ListeningHistoryModel", null)
+                        .WithMany("Genre")
+                        .HasForeignKey("ListeningHistoryModelId");
+                });
+
+            modelBuilder.Entity("sharemusic.Models.ListeningHistoryModel", b =>
+                {
+                    b.HasOne("sharemusic.Models.PlaylistModel", "Playlist")
+                        .WithMany()
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sharemusic.Models.SongModel", "Song")
+                        .WithMany()
+                        .HasForeignKey("SongSpotifyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Playlist");
+
+                    b.Navigation("Song");
+                });
+
             modelBuilder.Entity("sharemusic.Models.SongModel", b =>
                 {
+                    b.HasOne("sharemusic.Models.ArtistModel", null)
+                        .WithMany("Songs")
+                        .HasForeignKey("ArtistModelSpotifyId");
+
+                    b.HasOne("sharemusic.Models.GenreModel", null)
+                        .WithMany("Songs")
+                        .HasForeignKey("GenreModelId");
+
                     b.HasOne("sharemusic.Models.PlaylistModel", null)
                         .WithMany("Songs")
                         .HasForeignKey("PlaylistModelId");
+                });
+
+            modelBuilder.Entity("sharemusic.Models.ArtistModel", b =>
+                {
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("sharemusic.Models.GenreModel", b =>
+                {
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("sharemusic.Models.ListeningHistoryModel", b =>
+                {
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("sharemusic.Models.PlaylistModel", b =>

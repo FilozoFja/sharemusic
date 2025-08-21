@@ -19,7 +19,13 @@ builder.Services.AddDbContext<sharemusic.Db.MusicDbContext>(options =>
 
 builder.Services.AddScoped<ISongService,SongService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ISpotifyService, SpotifyService>();
+builder.Services.AddScoped<IPlaylistService, PlaylistService>();
+builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IListeningHistoryService, ListeningHistoryService>();
 
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

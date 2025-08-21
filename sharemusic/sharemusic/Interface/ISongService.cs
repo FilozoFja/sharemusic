@@ -1,12 +1,16 @@
-﻿using sharemusic.Models;
+﻿using sharemusic.DTO;
+using sharemusic.Models;
+using sharemusic.DTO.SongModel;
 
 namespace sharemusic.Interface
 {
     public interface ISongService
     {
-        public void AddSongDraft(string title, string? artist, string? album, string? genre, string? coverImageUrl, string? songUrl, bool isDraft);
-        public void DeleteSongDraft(int id);
-        public void EditSong(SongModel songModelNew);
-        public SongModel? GetSongById(int id); 
+        public Task<SongModel> GetSongBySpotifyIdAsync(string spotifyId);
+        public Task<List<SongShortModelDTO>> GetSongsByNameAsync(string name, int? take = null);
+        public Task<List<SongShortModelDTO>> GetAllSongsAsync();
+        public Task AddSongLengthAndURLAsync(string spotifyId, int songLengthInSeconds, string url);
+        public Task DeleteSongAsync(string ispotifyIdd);
+        public Task EditSongAsync(SongModelDTO songDTO, string spotifyId);
     }
 }

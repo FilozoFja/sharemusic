@@ -4,8 +4,8 @@ namespace sharemusic.Models
 {
     public class SpotifyTokenRequestModel
     {
-        [Key]
-        public string AccessToken { get; set; }
+        public int Id { get; set; }
+        public required string AccessToken { get; set; }
         public int ExpiresIn { get; set; }
         public string TokenType { get; set; } = "Bearer";
         public string? State { get; set; }
