@@ -12,7 +12,7 @@ namespace sharemusic.Models
         public string? Album { get; set; }
         public bool IsDraft { get; set; }
         public string? CoverImageUrl { get; set; }          
-        public int? SongLengthInSeconds { get; set; }                                     
+        public int? SongLengthInSeconds { get; set; }
 
         public string? LocalSongPath { get; set; }               
         public DateTime? ReleaseDate { get; set; }

@@ -2,8 +2,9 @@
 using sharemusic.Models;
 
 namespace sharemusic.Interface;
-public interface IGenreService
+public interface IGenreService 
 {
     public Task<List<GenreShortModelDTO>> GetGenreShortAsync();
     public Task<GenreModel> GetGenreById(string id);
+    public Task<List<GenreModel>> GetGenresBySongIdAsync(string songSpotifyId);
 }

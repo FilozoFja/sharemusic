@@ -43,5 +43,13 @@ namespace sharemusic.Service
             }
             return _mapper.Map<List<GenreShortModelDTO>>(genres);
         }
+
+        public async Task<List<GenreModel>> GetGenresBySongIdAsync(string songSpotifyId)
+        {
+            return await _context.Genres
+                .Where(g => g.Songs.Any(s => s.SpotifyId == songSpotifyId))
+                .ToListAsync();
+        }
+
     }
 }
