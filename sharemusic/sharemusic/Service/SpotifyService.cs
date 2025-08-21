@@ -118,7 +118,6 @@ namespace sharemusic.Service
 
             var playlistFull = await spotify.Playlists.Get(playlistId);
 
-            // Pobierz playlistę z Include dla Songs
             var playlist = await _musicDbContext.Playlists
                 .Include(p => p.Songs)
                 .FirstOrDefaultAsync(p => p.SpotifyId == playlistId);
@@ -127,13 +126,11 @@ namespace sharemusic.Service
             {
                 await _playlistService.AddPlaylistAsync(playlistFull);
 
-                // Pobierz ponownie po dodaniu
                 playlist = await _musicDbContext.Playlists
                     .Include(p => p.Songs)
                     .FirstOrDefaultAsync(p => p.SpotifyId == playlistId);
             }
 
-            // Upewnij się, że kolekcja Songs nie jest null
             if (playlist.Songs == null) playlist.Songs = new List<SongModel>();
 
             var allTracks = new List<PlaylistTrack<IPlayableItem>>();
@@ -186,6 +183,20 @@ namespace sharemusic.Service
                         mainArtist.Songs.Add(existingSong);
                         await _musicDbContext.SaveChangesAsync();
                     }
+                    if (mainArtist.Genres != null)
+                    {
+                        foreach (var genreName in mainArtist.Genres)
+                        {
+                            if (!string.IsNullOrWhiteSpace(genreName))
+                            {
+                                var genre = await GetOrCreateGenreAsync(genreName, spotify);
+
+                                if (!genre.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
+                                    genre.Songs.Add(existingSong);
+                                await _musicDbContext.SaveChangesAsync();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -195,7 +206,6 @@ namespace sharemusic.Service
 
         public async Task<ArtistModel> GetOrCreateArtistAsync(string artistId, SpotifyClient spotify)
         {
-            // Pobierz z Include dla Songs
             var existingArtist = await _musicDbContext.Artists
                 .Include(a => a.Songs)
                 .FirstOrDefaultAsync(a => a.SpotifyId == artistId);
@@ -218,9 +228,29 @@ namespace sharemusic.Service
 
             _musicDbContext.Artists.Add(newArtist);
             await _musicDbContext.SaveChangesAsync();
-
-            Console.WriteLine($"Utworzono nowego artystę: {newArtist.Name}");
             return newArtist;
+        }
+
+        public async Task<GenreModel> GetOrCreateGenreAsync(string genreName, SpotifyClient spotify)
+        {
+            var existingGenre = await _musicDbContext.Genres
+                .Include(g => g.Songs)
+                .FirstOrDefaultAsync(g => g.Name == genreName);
+            if (existingGenre != null)
+            {
+                return existingGenre;
+            }
+
+            var newGenre = new GenreModel
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = genreName,
+                Songs = new List<SongModel>()
+            };
+
+            _musicDbContext.Genres.Add(newGenre);
+            await _musicDbContext.SaveChangesAsync();
+            return newGenre;
         }
 
         public async Task<SpotifyClient> SetSpotifyDefaultRequest()
