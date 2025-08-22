@@ -10,6 +10,6 @@ namespace sharemusic.Interface
         public Task<List<ListeningHistoryModelDTO>> GetTopListened(int top);
         public Task<List<ListeningHistoryModelDTO>> GetTopListenedArtists(int top);
         public Task<List<ListeningHistoryModelDTO>> GetTopListenedGenres(int top);
-        
+        public Task<List<ListeningHistoryModelDTO>> GetRecentListeningHistory(int take);
     }
 }

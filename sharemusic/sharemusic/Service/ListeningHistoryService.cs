@@ -102,5 +102,14 @@ namespace sharemusic.Service
 
             return _mapper.Map<List<ListeningHistoryModelDTO>>(query);
         }
+        public async Task<List<ListeningHistoryModelDTO>> GetRecentListeningHistory(int take)
+        {
+            var query = await _musicDbContext.ListeningHistory
+                .OrderByDescending(h => h.DateTime)
+                .Take(take)
+                .ToListAsync();
+
+            return _mapper.Map<List<ListeningHistoryModelDTO>>(query);
+        }
     }
 }
