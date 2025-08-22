@@ -3,6 +3,7 @@ using sharemusic.Db;
 using sharemusic.DTO.ListeningHistory;
 using sharemusic.Interface;
 using sharemusic.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace sharemusic.Service
 {
@@ -50,6 +51,56 @@ namespace sharemusic.Service
 
             return _mapper.Map<ListeningHistoryModelDTO>(history); ;
 
+        }
+        public async Task<List<ListeningHistoryModelDTO>> SearchByDate(DateTime start, DateTime? end)
+        {
+            var query = _musicDbContext.ListeningHistory
+                .Where(h => h.DateTime >= start);
+
+            if (end.HasValue)
+            {
+                query = query.Where(h => h.DateTime <= end.Value);
+            }
+
+            return _mapper.Map<List<ListeningHistoryModelDTO>>(query);
+        }
+        public async Task<List<ListeningHistoryModelDTO>> GetTopListened(int top)
+        {
+            var query = await _musicDbContext.ListeningHistory
+                .Where(h => h.Song != null)
+                .GroupBy(h => h.Song.SpotifyId)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.OrderByDescending(h => h.DateTime).FirstOrDefault())
+                .Take(top)
+                .ToListAsync();
+
+            return _mapper.Map<List<ListeningHistoryModelDTO>>(query);
+        }
+        public async Task<List<ListeningHistoryModelDTO>> GetTopListenedArtists(int top)
+        {
+            var query = await _musicDbContext.ListeningHistory
+                .Where(h => h.Song != null && h.Song.Artist != null)
+                .GroupBy(h => h.Song.Artist)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.OrderByDescending(h => h.DateTime).FirstOrDefault())
+                .Take(top)
+                .ToListAsync();
+
+            return _mapper.Map<List<ListeningHistoryModelDTO>>(query);
+        }
+
+        public async Task<List<ListeningHistoryModelDTO>> GetTopListenedGenres(int top)
+        {
+            var query = await _musicDbContext.ListeningHistory
+                .Where(h => h.Genre != null && h.Genre.Any())
+                .SelectMany(h => h.Genre, (history, genre) => new { history, genre })
+                .GroupBy(x => x.genre.Name)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.FirstOrDefault().history)
+                .Take(top)
+                .ToListAsync();
+
+            return _mapper.Map<List<ListeningHistoryModelDTO>>(query);
         }
     }
 }
