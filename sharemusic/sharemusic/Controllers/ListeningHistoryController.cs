@@ -21,16 +21,16 @@ namespace sharemusic.Controllers
             var listeningHistoryShort = await _listeningHistoryService.AddToHistory(spotifySongId, playlistId);
             return Ok(listeningHistoryShort);
         }
-        [HttpGet]
-        public IActionResult GetListeningHistory(DateTime start, DateTime end)
+        [HttpGet("date")]
+        public async Task<IActionResult> GetListeningHistory([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
-            var listeningHistory = _listeningHistoryService.SearchByDate(start, end);
+            var listeningHistory = await _listeningHistoryService.SearchByDate(start, end);
             return Ok(listeningHistory);
         }
         [HttpGet("top-song")]
         public IActionResult GetTopListenedSongs(int top)
         {
-            var topListenedSongs = _listeningHistoryService.GetTopListened(top);
+            var topListenedSongs = _listeningHistoryService.GetTopListenedSong(top);
             return Ok(topListenedSongs);
         }
         [HttpGet("top-artists")]
