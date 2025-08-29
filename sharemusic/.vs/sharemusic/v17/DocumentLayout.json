@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "E:\\projectX\\sharemusic\\sharemusic\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\service\\listeninghistoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\listeninghistoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\interface\\ilisteninghistoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\interface\\ilisteninghistoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\controllers\\listeninghistorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\controllers\\listeninghistorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\models\\artistmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\models\\artistmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\service\\songservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\songservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -43,53 +39,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ListeningHistoryController.cs",
-              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Controllers\\ListeningHistoryController.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Controllers\\ListeningHistoryController.cs",
-              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Controllers\\ListeningHistoryController.cs",
-              "RelativeToolTip": "sharemusic\\Controllers\\ListeningHistoryController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAByAAAA",
+              "Title": "SongService.cs",
+              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\SongService.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Service\\SongService.cs",
+              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\SongService.cs",
+              "RelativeToolTip": "sharemusic\\Service\\SongService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-24T14:41:45.3Z",
+              "WhenOpened": "2025-08-29T12:22:38.602Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "IListeningHistoryService.cs",
-              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Interface\\IListeningHistoryService.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Interface\\IListeningHistoryService.cs",
-              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Interface\\IListeningHistoryService.cs",
-              "RelativeToolTip": "sharemusic\\Interface\\IListeningHistoryService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAsAAABZAAAA",
+              "Title": "UserService.cs",
+              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\UserService.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Service\\UserService.cs",
+              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\UserService.cs",
+              "RelativeToolTip": "sharemusic\\Service\\UserService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-24T14:41:23.153Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ArtistModel.cs",
-              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Models\\ArtistModel.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Models\\ArtistModel.cs",
-              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Models\\ArtistModel.cs",
-              "RelativeToolTip": "sharemusic\\Models\\ArtistModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-24T14:37:39.528Z",
+              "WhenOpened": "2025-08-29T12:22:23.28Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ListeningHistoryService.cs",
-              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\ListeningHistoryService.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Service\\ListeningHistoryService.cs",
-              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\ListeningHistoryService.cs",
-              "RelativeToolTip": "sharemusic\\Service\\ListeningHistoryService.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAAAgwEMAAAAmAAAA",
+              "Title": "UserController.cs",
+              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Controllers\\UserController.cs",
+              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Controllers\\UserController.cs",
+              "RelativeToolTip": "sharemusic\\Controllers\\UserController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-24T13:58:25.233Z",
+              "WhenOpened": "2025-08-29T12:21:54.754Z",
               "EditorCaption": ""
             }
           ]

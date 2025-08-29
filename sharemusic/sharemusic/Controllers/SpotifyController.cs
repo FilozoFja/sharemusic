@@ -30,5 +30,12 @@ namespace sharemusic.Controllers
             var playlist = await _playlistService.GetPlaylistBySpotifyIdAsync(playlistId);
             return Ok(playlist);
         }
+
+        [HttpGet("userData")]
+        public async Task<IActionResult> GetUserData()
+        {
+            var user = await _spotifyService.DownloadInfoAboutUser();
+            return Ok(user);
+        }
     }
 }

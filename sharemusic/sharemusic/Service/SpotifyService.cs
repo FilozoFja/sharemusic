@@ -204,6 +204,27 @@ namespace sharemusic.Service
             Console.WriteLine($"Zakończono przetwarzanie playlisty: {playlist.Name}. Piosenek: {playlist.Songs.Count}");
         }
 
+        public async Task<UserModel> DownloadInfoAboutUser()
+        {
+            SpotifyClient spotify = await SetSpotifyDefaultRequest();
+
+            var user = await spotify.UserProfile.Current();
+
+            var userModel = new UserModel
+            {
+                Name = user.DisplayName ?? "Unknown",
+                ImageUrl = user.Images?.FirstOrDefault()?.Url
+            };
+
+            _musicDbContext.Users.RemoveRange(_musicDbContext.Users);
+
+            await _musicDbContext.Users.AddAsync(userModel);
+
+            await _musicDbContext.SaveChangesAsync();
+            return userModel;
+        }
+
+
         public async Task<ArtistModel> GetOrCreateArtistAsync(string artistId, SpotifyClient spotify)
         {
             var existingArtist = await _musicDbContext.Artists
