@@ -23,6 +23,7 @@ builder.Services.AddScoped<ISpotifyService, SpotifyService>();
 builder.Services.AddScoped<IPlaylistService, PlaylistService>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IListeningHistoryService, ListeningHistoryService>();
 
 builder.Services.AddHttpClient();
