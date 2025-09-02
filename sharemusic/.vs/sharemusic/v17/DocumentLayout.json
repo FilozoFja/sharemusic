@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "E:\\projectX\\sharemusic\\sharemusic\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|e:\\projectx\\sharemusic\\sharemusic\\sharemusic\\service\\songservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\songservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,39 +34,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SongService.cs",
-              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\SongService.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Service\\SongService.cs",
-              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\SongService.cs",
-              "RelativeToolTip": "sharemusic\\Service\\SongService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Program.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Program.cs",
+              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Program.cs",
+              "RelativeToolTip": "sharemusic\\Program.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAADwvxcAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-29T12:22:38.602Z",
+              "WhenOpened": "2025-09-02T16:57:39.655Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\UserService.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Service\\UserService.cs",
-              "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Service\\UserService.cs",
-              "RelativeToolTip": "sharemusic\\Service\\UserService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-29T12:22:23.28Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "UserController.cs",
               "DocumentMoniker": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "sharemusic\\Controllers\\UserController.cs",
               "ToolTip": "E:\\projectX\\sharemusic\\sharemusic\\sharemusic\\Controllers\\UserController.cs",
               "RelativeToolTip": "sharemusic\\Controllers\\UserController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAfAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-29T12:21:54.754Z",
               "EditorCaption": ""

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using sharemusic.Interface;
 
 namespace sharemusic.Controllers
 {
@@ -7,10 +8,17 @@ namespace sharemusic.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly 
-        public UserController()
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
-            
+            _userService = userService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserData()
+        {
+            var userData = await _userService.GetUserData();
+            return Ok(userData);
         }
     }
 }
