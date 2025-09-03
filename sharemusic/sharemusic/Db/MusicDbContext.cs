@@ -14,7 +14,7 @@ namespace sharemusic.Db
         public DbSet<Models.ArtistModel> Artists { get; set; }
         public DbSet<Models.GenreModel> Genres { get; set; }
         public DbSet<Models.ListeningHistoryModel> ListeningHistory { get; set; }
-
+        public DbSet<Models.UserModel> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
