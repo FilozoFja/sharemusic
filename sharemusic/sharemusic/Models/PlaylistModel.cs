@@ -11,5 +11,6 @@ namespace sharemusic.Models
         public string? Description { get; set; }
         public string? CoverUrl { get; set; }
         public List<SongModel> Songs { get; set; } = new List<SongModel>();
+        public string OwnerName { get; set; } = string.Empty;
     }
 }

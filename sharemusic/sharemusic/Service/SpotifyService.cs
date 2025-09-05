@@ -86,7 +86,8 @@ namespace sharemusic.Service
                                 Name = playlist.Name ?? "Unnamed",
                                 Description = playlist.Description ?? "",
                                 CoverUrl = playlist.Images?.FirstOrDefault()?.Url,
-                                Songs = new List<SongModel>()
+                                Songs = new List<SongModel>(),
+                                OwnerName = playlist.Owner?.Display_name ?? "Unknown"
                             };
                             _musicDbContext.Playlists.Add(newPlaylist);
                         }
