@@ -5,4 +5,5 @@ public class PlaylistShortModelDTO
     public string? SpotifyId { get; set; }
     public required string Name { get; set; }
     public string? CoverImageUrl { get; set; }
+    public string OwnerName { get; set; } = string.Empty;
 }
