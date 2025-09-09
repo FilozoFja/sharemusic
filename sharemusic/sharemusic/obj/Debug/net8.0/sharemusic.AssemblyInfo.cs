@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sharemusic")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a11869fc3a70ac270c04581921ae93d25c09cf44")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b3d0f6b60469a35e6407d14573ee6071bbaf7b8")]
 [assembly: System.Reflection.AssemblyProductAttribute("sharemusic")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sharemusic")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
