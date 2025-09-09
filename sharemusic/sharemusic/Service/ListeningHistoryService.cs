@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using sharemusic.DTO.ArtistModel;
 using sharemusic.DTO.SongModel;
 using sharemusic.DTO.GenreModel;
+using sharemusic.DTO.PlaylistModel;
 
 namespace sharemusic.Service
 {
@@ -138,6 +139,63 @@ namespace sharemusic.Service
                 .ToListAsync();
 
             return _mapper.Map<List<ListeningHistoryModelDTO>>(query);
+        }
+
+        public async Task<List<SongShortModelDTO>> GetLeastPopularSongsByGenre(string genre, int top)
+        {
+            var query = await _musicDbContext.ListeningHistory
+                .Include(h => h.Song)
+                .Include(h => h.Genre)
+                .Where(h => h.Song != null && h.Genre.Any(g => g.Name == genre))
+                .GroupBy(h => h.Song.SpotifyId)
+                .OrderBy(g => g.Count()) 
+                .Select(g => g.OrderByDescending(h => h.DateTime).FirstOrDefault())
+                .Take(top)
+                .ToListAsync();
+
+            var songs = await _musicDbContext.Songs
+                .Where(s => query.Select(h => h.Song.SpotifyId).Contains(s.SpotifyId))
+                .ToListAsync();
+
+            return _mapper.Map<List<SongShortModelDTO>>(songs);
+        }
+
+        public async Task<List<ArtistShortModelDTO>> GetLeastPopularArtistsByGenre(string genre, int top)
+        {
+            var query = await _musicDbContext.ListeningHistory
+                .Include(h => h.Song)
+                .Include(h => h.Genre)
+                .Where(h => h.Song != null && !string.IsNullOrEmpty(h.Song.Artist) && h.Genre.Any(g => g.Name == genre))
+                .GroupBy(h => h.Song.Artist)
+                .OrderBy(g => g.Count()) 
+                .Take(top)
+                .Select(g => g.Key)
+                .ToListAsync();
+
+            var artists = await _musicDbContext.Artists
+                .Where(a => query.Contains(a.Name))
+                .ToListAsync();
+
+            return _mapper.Map<List<ArtistShortModelDTO>>(artists);
+        }
+
+        public async Task<List<PlaylistShortModelDTO>> GetLeastPopularPlaylistsByGenre(string genre, int top)
+        {
+            var query = await _musicDbContext.ListeningHistory
+                .Include(h => h.Playlist)
+                .Include(h => h.Genre)
+                .Where(h => h.Playlist != null && h.Genre.Any(g => g.Name == genre))
+                .GroupBy(h => h.Playlist.Id)
+                .OrderBy(g => g.Count()) 
+                .Take(top)
+                .Select(g => g.Key)
+                .ToListAsync();
+
+            var playlists = await _musicDbContext.Playlists
+                .Where(p => query.Contains(p.Id))
+                .ToListAsync();
+
+            return _mapper.Map<List<PlaylistShortModelDTO>>(playlists);
         }
     }
 }
