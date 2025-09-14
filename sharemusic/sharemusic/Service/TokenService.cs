@@ -44,10 +44,8 @@ namespace sharemusic.Service
             var token = await _dbContext.SpotifyTokens.FirstOrDefaultAsync();
             if (token == null || string.IsNullOrEmpty(token.AccessToken) || DateTime.UtcNow > token.ExpiresAt)
             {
-                await DeleteTokenAsync();
                 return false;
             }
-
             return true;
         }
 
