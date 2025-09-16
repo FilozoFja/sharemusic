@@ -12,10 +12,12 @@ namespace sharemusic.Service
     {
         private readonly MusicDbContext _dbContext;
         private readonly IMapper _mapper;
-        public SongService(MusicDbContext dbContext, IMapper mapper)
+        private readonly IConfiguration _configuration;
+        public SongService(MusicDbContext dbContext, IMapper mapper, IConfiguration configuration)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _configuration = configuration;
         }
         /// <summary>
         /// Set location and song lenght manually.
@@ -32,6 +34,55 @@ namespace sharemusic.Service
                 await _dbContext.SaveChangesAsync();
             }
         }
+
+        /// <summary>
+        /// Adding song to library by spotify ID and file.
+        /// </summary>
+        public async Task AddSongToLibraryAsync(string spotifyId, IFormFile songToAdd)
+        {
+            var song = await _dbContext.Songs.FirstOrDefaultAsync(x => x.SpotifyId == spotifyId);
+            if (song == null)
+            {
+                throw new Exception("Song not found.");
+            }
+            if (songToAdd == null || songToAdd.Length == 0)
+            {
+                throw new Exception("Invalid file.");
+            }
+
+            var uploadsFolder = _configuration.GetValue<string>("UploadPath");
+
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            if(songToAdd.ContentType != "audio/mpeg" && songToAdd.ContentType != "audio/wav" && songToAdd.ContentType != "audio/ogg")
+            {
+                throw new Exception("Unsupported file format. Please upload an mp3, wav, or ogg file.");
+            }
+
+            var filePath = Path.Combine(uploadsFolder, $"{spotifyId}_{songToAdd.FileName}");
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await songToAdd.CopyToAsync(stream);
+            }
+
+            song.LocalSongPath = filePath;
+            song.IsDraft = false;
+            song.SongLengthInSeconds = (int)(songToAdd.Length / 1000); 
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error saving song to library: " + ex.Message);
+            }
+        }
+
+
         /// <summary>
         /// Delete song by spotify ID.
         /// </summary>

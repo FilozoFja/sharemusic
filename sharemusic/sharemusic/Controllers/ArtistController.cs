@@ -63,5 +63,4 @@ public class ArtistController : ControllerBase
         var updatedArtist = await _artistService.UpdateArtistAsync(artistDto.SpotifyId, artistDto);
         return Ok(updatedArtist);
     }
-
 }

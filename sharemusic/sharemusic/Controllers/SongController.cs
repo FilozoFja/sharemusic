@@ -64,11 +64,11 @@ namespace sharemusic.Controllers
         /// Setting song length and URL 
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{id}/{url}/{songLengthInSeconds}")]
-        public async Task<IActionResult> AddSongLengthAndURLAsync(string spotifyId, string url, int songLengthInSeconds)
+        [HttpPost("AddToLibrary/{spotifyId}")]
+        public async Task<IActionResult> AddSongToLibrary(string spotifyId, IFormFile songToAdd)
         {
-            await _songService.AddSongLengthAndURLAsync(spotifyId, songLengthInSeconds, url);
-            return Ok(new { message = "Song length and URL added successfully." });
+            await _songService.AddSongToLibraryAsync(spotifyId, songToAdd);
+            return Ok(new { message = "Song added to library successfully." });
         }
 
     }
