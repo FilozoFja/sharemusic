@@ -1,0 +1,720 @@
+[
+  {
+    "ContainingType": "sharemusic.Controllers.ArtistController",
+    "Method": "UpdateArtistAsync",
+    "RelativePath": "api/artists",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "artistDto",
+        "Type": "sharemusic.DTOs.ArtistModelDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.ArtistController",
+    "Method": "GetArtistBySpotifyId",
+    "RelativePath": "api/artists/{spotifyId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifyId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.ArtistController",
+    "Method": "GetArtistsByNameAsync",
+    "RelativePath": "api/artists/nameToSearch/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.GenreController",
+    "Method": "GetGenresAsync",
+    "RelativePath": "api/Genre",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[sharemusic.DTO.GenreModel.GenreShortModelDTO, sharemusic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.GenreController",
+    "Method": "GetGenreByIdAsync",
+    "RelativePath": "api/Genre/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "sharemusic.Models.GenreModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.ListeningHistoryController",
+    "Method": "AddToHistory",
+    "RelativePath": "api/ListeningHistory",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifySongId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "playlistId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.ListeningHistoryController",
+    "Method": "GetListeningHistory",
+    "RelativePath": "api/ListeningHistory/date",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "start",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "end",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.ListeningHistoryController",
+    "Method": "GetRecentListeningHistory",
+    "RelativePath": "api/ListeningHistory/history/{take}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "take",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.ListeningHistoryController",
+    "Method": "GetTopListenedArtists",
+    "RelativePath": "api/ListeningHistory/top-artists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "top",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.ListeningHistoryController",
+    "Method": "GetTopListenedGenres",
+    "RelativePath": "api/ListeningHistory/top-genres",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "top",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.ListeningHistoryController",
+    "Method": "GetTopListenedSongs",
+    "RelativePath": "api/ListeningHistory/top-song",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "top",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "GetAllPlaylistsAsync",
+    "RelativePath": "api/Playlist",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[sharemusic.DTO.PlaylistModel.PlaylistShortModelDTO, sharemusic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "AddPlaylistAsync",
+    "RelativePath": "api/Playlist",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playlistToAdd",
+        "Type": "sharemusic.DTO.PlaylistModelDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "GetPlaylistByIdAsync",
+    "RelativePath": "api/Playlist/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "sharemusic.Models.PlaylistModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "UpdatePlaylistAsync",
+    "RelativePath": "api/Playlist/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatedPlaylist",
+        "Type": "sharemusic.DTO.PlaylistModelDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "DeletePlaylistAsync",
+    "RelativePath": "api/Playlist/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "AddSongToPlaylistAsync",
+    "RelativePath": "api/Playlist/{playlistId}/songs/{songId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playlistId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "songId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "DeleteSongFromPlaylistAsync",
+    "RelativePath": "api/Playlist/{playlistId}/songs/{songId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playlistId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "songId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "GetPlaylistByNameAsync",
+    "RelativePath": "api/Playlist/playlist/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[sharemusic.DTO.PlaylistModel.PlaylistShortModelDTO, sharemusic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controller.PlaylistController",
+    "Method": "GetPlaylistBySpotifyIdAsync",
+    "RelativePath": "api/Playlist/playlist/spotify/{spotifyId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifyId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "sharemusic.DTO.PlaylistModel.PlaylistShortModelDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.RecommendationController",
+    "Method": "RecommendationSelectedArtists",
+    "RelativePath": "api/Recommendation/artists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[sharemusic.DTO.ArtistModel.ArtistShortModelDTO, sharemusic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.RecommendationController",
+    "Method": "RecommendationSelectedPlaylists",
+    "RelativePath": "api/Recommendation/playlists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[sharemusic.DTO.PlaylistModel.PlaylistShortModelDTO, sharemusic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.RecommendationController",
+    "Method": "RecommendationSelectedSongs",
+    "RelativePath": "api/Recommendation/songs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[sharemusic.DTO.SongModel.SongShortModelDTO, sharemusic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controller.SearchBarController",
+    "Method": "Search",
+    "RelativePath": "api/SearchBar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "take",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SearchBarResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SongController",
+    "Method": "EditSongAsync",
+    "RelativePath": "api/Song",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "songModelDTO",
+        "Type": "sharemusic.DTO.SongModelDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "spotifyId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SongController",
+    "Method": "DeleteSongAsync",
+    "RelativePath": "api/Song/{spotifyId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifyId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SongController",
+    "Method": "GetSongById",
+    "RelativePath": "api/Song/{spotifyId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifyId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SongController",
+    "Method": "GetAllSongsAsync",
+    "RelativePath": "api/Song/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SongController",
+    "Method": "AddSongToLibrary",
+    "RelativePath": "api/Song/Files/{spotifyId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifyId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "songToAdd",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SongController",
+    "Method": "DeleteSongFile",
+    "RelativePath": "api/Song/Files/{spotifyId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifyId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SongController",
+    "Method": "SearchSongsAsync",
+    "RelativePath": "api/Song/Search/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SpotifyController",
+    "Method": "DownloadDraftSongFromSpotifyPlaylisy",
+    "RelativePath": "api/Spotify/playlist/{playlistId}/songs/getAll",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playlistId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SpotifyController",
+    "Method": "GetWholePlaylistFromSpotify",
+    "RelativePath": "api/Spotify/playlist/getAll",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.SpotifyController",
+    "Method": "GetUserData",
+    "RelativePath": "api/Spotify/userData",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.TokenController",
+    "Method": "SaveToken",
+    "RelativePath": "api/Token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifyTokenRequestModelDTO",
+        "Type": "sharemusic.DTO.SpotifyTokenRequestModelDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.TokenController",
+    "Method": "GetToken",
+    "RelativePath": "api/Token",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.TokenController",
+    "Method": "DeleteToken",
+    "RelativePath": "api/Token",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.TokenController",
+    "Method": "UpdateTokenAsync",
+    "RelativePath": "api/Token",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spotifyTokenRequestModelDTO",
+        "Type": "sharemusic.DTO.SpotifyTokenRequestModelDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.TokenController",
+    "Method": "GetTokenString",
+    "RelativePath": "api/Token/GetTokensString",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.TokenController",
+    "Method": "IsTokenValid",
+    "RelativePath": "api/Token/IsTokenvalid",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "sharemusic.Controllers.UserController",
+    "Method": "GetUserData",
+    "RelativePath": "api/User",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

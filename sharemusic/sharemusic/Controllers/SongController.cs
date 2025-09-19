@@ -64,12 +64,18 @@ namespace sharemusic.Controllers
         /// Setting song length and URL 
         /// </summary>
         /// <returns></returns>
-        [HttpPost("AddToLibrary/{spotifyId}")]
+        [HttpPost("Files/{spotifyId}")]
         public async Task<IActionResult> AddSongToLibrary(string spotifyId, IFormFile songToAdd)
         {
             await _songService.AddSongToLibraryAsync(spotifyId, songToAdd);
             return Ok(new { message = "Song added to library successfully." });
         }
 
+        [HttpDelete("Files/{spotifyId}")]
+        public async Task<IActionResult> DeleteSongFile(string spotifyId)
+        {
+            await _songService.DeleteSongFromLibraryAsync(spotifyId);
+            return Ok(new { message = "Song file deleted successfully." });
+        }
     }
 }

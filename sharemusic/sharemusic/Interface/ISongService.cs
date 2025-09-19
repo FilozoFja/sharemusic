@@ -13,5 +13,6 @@ namespace sharemusic.Interface
         public Task DeleteSongAsync(string ispotifyIdd);
         public Task EditSongAsync(SongModelDTO songDTO, string spotifyId);
         public Task AddSongToLibraryAsync(string spotifyId, IFormFile songToAdd);
+        public Task DeleteSongFromLibraryAsync(string spotifyId);
     }
 }

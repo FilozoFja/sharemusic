@@ -159,5 +159,36 @@ namespace sharemusic.Service
 
             return _mapper.Map<List<SongShortModelDTO>>(songs);
         }
+
+        public async Task DeleteSongFromLibraryAsync(string spotifyId)
+        {
+            var song = await _dbContext.Songs.FirstOrDefaultAsync(x => x.SpotifyId == spotifyId);
+            if (song == null)
+            {
+                throw new Exception("Song not found.");
+            }
+            if (!string.IsNullOrEmpty(song.LocalSongPath) && File.Exists(song.LocalSongPath))
+            {
+                try
+                {
+                    File.Delete(song.LocalSongPath);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error deleting file: " + ex.Message);
+                }
+            }
+            song.LocalSongPath = null;
+            song.IsDraft = true;
+            song.SongLengthInSeconds = null;
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating song: " + ex.Message);
+            }
+        }
     }
 }
