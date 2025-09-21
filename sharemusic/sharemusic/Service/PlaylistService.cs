@@ -13,11 +13,13 @@ public class PlaylistService : IPlaylistService
 {
     private readonly MusicDbContext _musicDbContext;
     private readonly IMapper _mapper;
+    private readonly IConfiguration _configuration;
 
-    public PlaylistService(MusicDbContext musicDbContext, IMapper mapper)
+    public PlaylistService(MusicDbContext musicDbContext, IMapper mapper, IConfiguration configuration)
     {
         _musicDbContext = musicDbContext;
         _mapper = mapper;
+        _configuration = configuration;
     }
     public async Task AddPlaylistAsync(FullPlaylist playlistToAdd)
     {
@@ -25,9 +27,29 @@ public class PlaylistService : IPlaylistService
         await _musicDbContext.Playlists.AddAsync(playlist);
         await _musicDbContext.SaveChangesAsync();
     }
-    public async Task<PlaylistModel> AddPlaylistAsync(PlaylistModelDTO playlistToAdd)
+    public async Task<PlaylistModel> AddPlaylistAsync(PlaylistModelDTO playlistToAdd, IFormFile coverImage)
     {
         var playlist = _mapper.Map<PlaylistModel>(playlistToAdd);
+
+        var path = _configuration.GetValue<string>("CoverPath");
+
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        if (coverImage != null && coverImage.Length > 0)
+        {
+            var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(coverImage.FileName)}";
+            var filePath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await coverImage.CopyToAsync(stream);
+            }
+
+            playlist.CoverUrl = filePath;
+        }
+
         await _musicDbContext.Playlists.AddAsync(playlist);
         await _musicDbContext.SaveChangesAsync();
 
@@ -103,7 +125,6 @@ public class PlaylistService : IPlaylistService
 
         return _mapper.Map<List<PlaylistShortModelDTO>>(playlists);
     }
-
     public async Task<List<PlaylistShortModelDTO>> GetAllPlaylistsAsync()
     {
         var playlists = await _musicDbContext.Playlists
@@ -138,10 +159,13 @@ public class PlaylistService : IPlaylistService
             throw new Exception("Playlist not found.");
         }
 
+        if (!string.IsNullOrEmpty(playlist.CoverUrl) && File.Exists(playlist.CoverUrl) && playlist.CoverUrl.Contains("CoverStorage"))
+        {
+            File.Delete(playlist.CoverUrl);
+        }
         _musicDbContext.Playlists.Remove(playlist);
         await _musicDbContext.SaveChangesAsync();
     }
-
     public async Task<PlaylistShortModelDTO> GetPlaylistBySpotifyIdAsync(string spotifyId)
     {
         Console.WriteLine($"Looking for playlist with SpotifyId: {spotifyId}");
@@ -158,5 +182,38 @@ public class PlaylistService : IPlaylistService
         }
 
         return _mapper.Map<PlaylistShortModelDTO>(playlist);
+    }
+    public async Task<PlaylistModel> UpdatePlaylistCoverAsync(int id, IFormFile coverImage)
+    {
+        var playlist = await _musicDbContext.Playlists.FirstOrDefaultAsync(x => x.Id == id);
+        if (playlist == null)
+        {
+            throw new Exception("Playlist not found.");
+        }
+
+        if (!string.IsNullOrEmpty(playlist.CoverUrl) && File.Exists(playlist.CoverUrl) && playlist.CoverUrl.Contains("CoverStorage"))
+        {
+            File.Delete(playlist.CoverUrl);
+        }
+        var path = _configuration.GetValue<string>("CoverPath");
+
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        if (coverImage != null && coverImage.Length > 0)
+        {
+            var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(coverImage.FileName)}";
+            var filePath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await coverImage.CopyToAsync(stream);
+            }
+
+            playlist.CoverUrl = filePath;
+        }
+        await _musicDbContext.SaveChangesAsync();
+        return playlist;
     }
 }

@@ -8,7 +8,7 @@ namespace sharemusic.Interface
     public interface IPlaylistService
     {
         public Task AddPlaylistAsync(FullPlaylist playlistToAdd);
-        public Task<PlaylistModel> AddPlaylistAsync(PlaylistModelDTO playlistToAdd);
+        public Task<PlaylistModel> AddPlaylistAsync(PlaylistModelDTO playlistToAdd, IFormFile coverImage);
         public Task AddSongToPlaylistAsync(int playlistId, int songId);
         public Task DeleteSongFromPlaylistAsync(int playlistId, int songId);
         public Task<PlaylistModel> GetPlaylistByIdAsync(int id);
@@ -17,5 +17,6 @@ namespace sharemusic.Interface
         public Task<PlaylistShortModelDTO> GetPlaylistBySpotifyIdAsync(string spotifyId);
         public Task<PlaylistModel> UpdatePlaylistAsync(int id, PlaylistModelDTO updatedPlaylist);
         public Task DeletePlaylistAsync(int id);
+        public Task<PlaylistModel> UpdatePlaylistCoverAsync(int id, IFormFile coverImage);
     }
 }

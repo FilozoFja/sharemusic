@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yPZMsS8o5aA=",
+  "dgSpecHash": "WZ8UjRwCFTg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\sharemusic.csproj",
+  "projectFilePath": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\sharemusic.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\korne\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\korne\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

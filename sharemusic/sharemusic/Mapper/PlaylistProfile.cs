@@ -11,7 +11,6 @@ public class PlaylistProfile : AutoMapper.Profile
         CreateMap<PlaylistModel, PlaylistModelDTO>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.CoverUrl, opt => opt.MapFrom(src => src.CoverUrl))
             .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.OwnerName))
             .ReverseMap();
 

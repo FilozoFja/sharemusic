@@ -11,9 +11,6 @@ namespace sharemusic.DTO
         [StringLength(500, ErrorMessage = "Opis nie może być dłuższy niż 500 znaków")]
         public string? Description { get; set; }
 
-        [Url(ErrorMessage = "CoverUrl musi być prawidłowym URL")]
-        [StringLength(500, ErrorMessage = "URL okładki nie może być dłuższy niż 500 znaków")]
-        public string? CoverUrl { get; set; }
         [StringLength(100, ErrorMessage = "Imie twórcy nie może być dłuższe niż 100 znaków")]
         public string OwnerName { get; set; } = string.Empty;
     }

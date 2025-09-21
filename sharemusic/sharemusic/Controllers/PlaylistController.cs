@@ -14,26 +14,25 @@ namespace sharemusic.Controller {
         {
             _playlistService = playlistService;
         }
-/// <summary>
-/// Gets a playlist by its ID.
-/// </summary>
+        /// <summary>
+        /// Gets a playlist by its ID.
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<PlaylistModel> GetPlaylistByIdAsync(int id)
         {
             return await _playlistService.GetPlaylistByIdAsync(id);
         }
-/// <summary>W
-/// Gets a list of playlists by name.
-/// </summary>
+        /// <summary>
+        /// Gets a list of playlists by name.
+        /// </summary>
         [HttpGet("playlist/{name}")]
         public async Task<List<PlaylistShortModelDTO>> GetPlaylistByNameAsync(string name)
         {
             return await _playlistService.GetPlaylistByNameAsync(name);
         }
-/// <summary>
-/// Gets a playlist short model by its Spotify ID.
-/// </summary>
-
+        /// <summary>
+        /// Gets a playlist short model by its Spotify ID.
+        /// </summary>
         [HttpGet("playlist/spotify/{spotifyId}")]
         public async Task<PlaylistShortModelDTO> GetPlaylistBySpotifyIdAsync(string spotifyId)
         {
@@ -48,31 +47,31 @@ namespace sharemusic.Controller {
             }
             return playlist;
         }
-/// <summary>
-/// Gets all playlists short model;
-/// </summary>
-/// <returns></returns>
+        /// <summary>
+        /// Gets all playlists short model;
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<List<PlaylistShortModelDTO>> GetAllPlaylistsAsync()
         {
             return await _playlistService.GetAllPlaylistsAsync();
         }
-/// <summary>
-/// Adds a new playlist.
-/// </summary>
+        /// <summary>
+        /// Adds a new playlist.
+        /// </summary>
         [HttpPost]
-        public async Task<IActionResult> AddPlaylistAsync([FromBody] PlaylistModelDTO playlistToAdd)
+        public async Task<IActionResult> AddPlaylistAsync([FromForm]PlaylistModelDTO playlistToAdd, IFormFile coverPhoto)
         {
             if (playlistToAdd == null)
             {
                 return BadRequest("Playlist data is null.");
             }
-            var playlist = await _playlistService.AddPlaylistAsync(playlistToAdd);
+            var playlist = await _playlistService.AddPlaylistAsync(playlistToAdd, coverPhoto);
             return Ok(playlist);
         }
-/// <summary>
-///  Adds a song to a playlist.
-/// </summary>
+        /// <summary>
+        ///  Adds a song to a playlist.
+        /// </summary>
         [HttpPost("{playlistId}/songs/{songId}")]
         public async Task<IActionResult> AddSongToPlaylistAsync(int playlistId,int songId)
         {
@@ -87,9 +86,9 @@ namespace sharemusic.Controller {
             }
 
         }
-/// <summary>
-///  Deletes a song from a playlist.
-/// </summary>
+        /// <summary>
+        ///  Deletes a song from a playlist.
+        /// </summary>
         [HttpDelete("{playlistId}/songs/{songId}")]
         public async Task<IActionResult> DeleteSongFromPlaylistAsync(int playlistId, int songId)
         {
@@ -103,9 +102,9 @@ namespace sharemusic.Controller {
                 return BadRequest(ex.Message);
             }
         }
-/// <summary>
-/// Update playlist by ID.
-/// </summary>
+        /// <summary>
+        /// Update playlist by ID.
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePlaylistAsync(int id, [FromBody] PlaylistModelDTO updatedPlaylist)
         {
@@ -123,9 +122,9 @@ namespace sharemusic.Controller {
                 return BadRequest(ex.Message);
             }
         }
-/// <summary>
-/// Deletes a playlist by ID.
-/// </summary>
+        /// <summary>
+        /// Deletes a playlist by ID.
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlaylistAsync(int id)
         {
@@ -139,5 +138,15 @@ namespace sharemusic.Controller {
                 return BadRequest(ex.Message);
             }
         }
+        /// <summary>
+        /// Update playlist local file cover
+        /// </summary>
+        [HttpPut("cover/{id}")]
+        public async Task<IActionResult> UpdatePlaylistCover(int id, IFormFile coverPhoto)
+        {
+            var playlist = await _playlistService.UpdatePlaylistCoverAsync(id, coverPhoto);
+            return Ok(playlist);
+        }
+    
     }
 }

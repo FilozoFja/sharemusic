@@ -1,22 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\",
+  "WorkspaceRootPath": "D:\\Coding\\sharemusic\\sharemusic\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|c:\\users\\korne\\documents\\github\\sharemusic\\sharemusic\\sharemusic\\controllers\\songcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\controllers\\songcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\controllers\\playlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\controllers\\playlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|c:\\users\\korne\\documents\\github\\sharemusic\\sharemusic\\sharemusic\\service\\songservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\songservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\service\\playlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\playlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|c:\\users\\korne\\documents\\github\\sharemusic\\sharemusic\\sharemusic\\interface\\isongservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\interface\\isongservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|c:\\users\\korne\\documents\\github\\sharemusic\\sharemusic\\sharemusic\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\interface\\iplaylistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\interface\\iplaylistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,57 +22,57 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\appsettings.json",
-              "RelativeDocumentMoniker": "sharemusic\\appsettings.json",
-              "ToolTip": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\appsettings.json",
-              "RelativeToolTip": "sharemusic\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-16T17:38:41.639Z"
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SongService.cs",
-              "DocumentMoniker": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\Service\\SongService.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Service\\SongService.cs",
-              "ToolTip": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\Service\\SongService.cs",
-              "RelativeToolTip": "sharemusic\\Service\\SongService.cs",
-              "ViewState": "AgIAAJEAAAAAAAAAAAAUwKIAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T16:37:01.177Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:1999510690:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ISongService.cs",
-              "DocumentMoniker": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\Interface\\ISongService.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Interface\\ISongService.cs",
-              "ToolTip": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\Interface\\ISongService.cs",
-              "RelativeToolTip": "sharemusic\\Interface\\ISongService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAuAAAAAAAAAA==",
+              "Title": "IPlaylistService.cs",
+              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Interface\\IPlaylistService.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Interface\\IPlaylistService.cs",
+              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Interface\\IPlaylistService.cs",
+              "RelativeToolTip": "sharemusic\\Interface\\IPlaylistService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T16:30:53.598Z",
+              "WhenOpened": "2025-09-21T21:31:24.146Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SongController.cs",
-              "DocumentMoniker": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\Controllers\\SongController.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Controllers\\SongController.cs",
-              "ToolTip": "C:\\Users\\korne\\Documents\\GitHub\\sharemusic\\sharemusic\\sharemusic\\Controllers\\SongController.cs",
-              "RelativeToolTip": "sharemusic\\Controllers\\SongController.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAADgv1AAAAABAAAAAAAAAA==",
+              "Title": "PlaylistController.cs",
+              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Controllers\\PlaylistController.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Controllers\\PlaylistController.cs",
+              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Controllers\\PlaylistController.cs",
+              "RelativeToolTip": "sharemusic\\Controllers\\PlaylistController.cs",
+              "ViewState": "AQIAAFwAAAAAAAAAAAAIwI0AAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T15:15:41.909Z",
+              "WhenOpened": "2025-09-21T20:57:59.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlaylistService.cs",
+              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Service\\PlaylistService.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Service\\PlaylistService.cs",
+              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Service\\PlaylistService.cs",
+              "RelativeToolTip": "sharemusic\\Service\\PlaylistService.cs",
+              "ViewState": "AQIAAIwAAAAAAAAAAAAUwNoAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-21T20:34:37.571Z",
               "EditorCaption": ""
             }
           ]
