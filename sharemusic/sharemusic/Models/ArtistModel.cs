@@ -12,4 +12,5 @@ public class ArtistModel
     public List<string?> Genres { get; set; } = [];
 
     public List<SongModel> Songs { get; set; } = new List<SongModel>();
+    public List<AlbumModel> Albums { get; set; } = new List<AlbumModel>();
 }

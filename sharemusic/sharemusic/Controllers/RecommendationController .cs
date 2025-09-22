@@ -22,7 +22,7 @@ namespace sharemusic.Controllers
         public async Task<ActionResult<List<SongShortModelDTO>>> RecommendationSelectedSongs()
         {
             var recommendedGenres = await _listeningHistoryService.GetTopListenedGenres(5);
-            if (recommendedGenres == null || recommendedGenres.Count <= 5)
+            if (recommendedGenres == null || recommendedGenres.Count == 0)
                 return NotFound("No genres found in listening history.");
 
             var recommendedSongs = new List<SongShortModelDTO>();
@@ -38,7 +38,7 @@ namespace sharemusic.Controllers
         public async Task<ActionResult<List<ArtistShortModelDTO>>> RecommendationSelectedArtists()
         {
             var recommendedGenres = await _listeningHistoryService.GetTopListenedGenres(5);
-            if (recommendedGenres == null || recommendedGenres.Count <= 5)
+            if (recommendedGenres == null || recommendedGenres.Count == 0)
                 return NotFound("No genres found in listening history.");
 
             var recommendedArtists = new List<ArtistShortModelDTO>();
@@ -54,7 +54,7 @@ namespace sharemusic.Controllers
         public async Task<ActionResult<List<PlaylistShortModelDTO>>> RecommendationSelectedPlaylists()
         {
             var recommendedGenres = await _listeningHistoryService.GetTopListenedGenres(5);
-            if (recommendedGenres == null || recommendedGenres.Count <= 5)
+            if (recommendedGenres == null || recommendedGenres.Count == 0)
                 return NotFound("No genres found in listening history.");
 
             var recommendedPlaylists = new List<PlaylistShortModelDTO>();

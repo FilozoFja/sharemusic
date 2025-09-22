@@ -108,7 +108,6 @@ namespace sharemusic.Service
 
             song.Title = songDTO.Title != null ? songDTO.Title : throw new Exception("Title cannot be null");
             song.Artist = songDTO.Artist;
-            song.Album = songDTO.Album;
             song.IsDraft = songDTO.IsDraft != null ? songDTO.IsDraft.Value : true;
             song.SongLengthInSeconds = songDTO.SongLengthInSeconds;
             song.LocalSongPath = songDTO.LocalSongPath;

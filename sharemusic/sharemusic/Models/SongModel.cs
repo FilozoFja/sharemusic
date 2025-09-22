@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace sharemusic.Models
 {
@@ -9,7 +11,11 @@ namespace sharemusic.Models
         public required string Title { get; set; }
         public string? Artist { get; set; }
         public string? ArtistSpotifyId { get; set; }
-        public string? Album { get; set; }
+        public string? AlbumName { get; set; }
+        public required string AlbumId { get; set; }
+        [JsonIgnore]
+        public AlbumModel Album { get; set; }
+
         public bool IsDraft { get; set; }
         public string? CoverImageUrl { get; set; }          
         public int? SongLengthInSeconds { get; set; }
@@ -26,7 +32,7 @@ namespace sharemusic.Models
 
 
         public string DisplayArtist => Artist ?? "Nieznany artysta";
-        public string DisplayAlbum => Album ?? "Nieznany album";
+        public string DisplayAlbum => AlbumName ?? "Nieznany album";
 
     }
 }

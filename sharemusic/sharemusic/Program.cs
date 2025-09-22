@@ -25,6 +25,7 @@ builder.Services.AddScoped<IArtistService, ArtistService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IListeningHistoryService, ListeningHistoryService>();
+builder.Services.AddScoped<IAlbumService, AlbumService>();
 
 builder.Services.AddHttpClient();
 

@@ -8,6 +8,7 @@ using sharemusic.DTO.ArtistModel;
 using sharemusic.DTO.SongModel;
 using sharemusic.DTO.GenreModel;
 using sharemusic.DTO.PlaylistModel;
+using sharemusic.DTO.Album;
 
 namespace sharemusic.Service
 {
@@ -196,6 +197,20 @@ namespace sharemusic.Service
                 .ToListAsync();
 
             return _mapper.Map<List<PlaylistShortModelDTO>>(playlists);
+        }
+
+        public async Task<List<AlbumShortModelDTO>> GetTopListenedAlbums(int top)
+        {
+            var query = await _musicDbContext.ListeningHistory
+                .Include(h => h.Song)
+                .Where(h => h.Song != null)
+                .GroupBy(h => h.Song.Album) 
+                .OrderByDescending(g => g.Count())
+                .Take(top)
+                .Select(g => g.Key) 
+                .ToListAsync();
+
+            return _mapper.Map<List<AlbumShortModelDTO>>(query);
         }
     }
 }

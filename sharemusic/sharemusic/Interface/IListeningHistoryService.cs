@@ -1,4 +1,5 @@
-﻿using sharemusic.DTO.ArtistModel;
+﻿using sharemusic.DTO.Album;
+using sharemusic.DTO.ArtistModel;
 using sharemusic.DTO.GenreModel;
 using sharemusic.DTO.ListeningHistory;
 using sharemusic.DTO.PlaylistModel;
@@ -14,6 +15,7 @@ namespace sharemusic.Interface
         public Task<List<SongShortModelDTO>> GetTopListenedSong(int top);
         public Task<List<ArtistShortModelDTO>> GetTopListenedArtists(int top);
         public Task<List<GenreShortModelDTO>> GetTopListenedGenres(int top);
+        public Task<List<AlbumShortModelDTO>> GetTopListenedAlbums(int top);
         public Task<List<ListeningHistoryModelDTO>> GetRecentListeningHistory(int take);
         Task<List<SongShortModelDTO>> GetLeastPopularSongsByGenre(string genre, int top);
         Task<List<ArtistShortModelDTO>> GetLeastPopularArtistsByGenre(string genre, int top);

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sharemusic.Db;
 
@@ -10,9 +11,11 @@ using sharemusic.Db;
 namespace sharemusic.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    partial class MusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250922104813_AlbumDbModelFix")]
+    partial class AlbumDbModelFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
@@ -39,7 +42,7 @@ namespace sharemusic.Migrations
 
                     b.HasIndex("ArtistSpotifyId");
 
-                    b.ToTable("Albums", (string)null);
+                    b.ToTable("Albums");
                 });
 
             modelBuilder.Entity("sharemusic.Models.ArtistModel", b =>
@@ -59,7 +62,7 @@ namespace sharemusic.Migrations
 
                     b.HasKey("SpotifyId");
 
-                    b.ToTable("Artists", (string)null);
+                    b.ToTable("Artists");
                 });
 
             modelBuilder.Entity("sharemusic.Models.GenreModel", b =>
@@ -78,7 +81,7 @@ namespace sharemusic.Migrations
 
                     b.HasIndex("ListeningHistoryModelId");
 
-                    b.ToTable("Genres", (string)null);
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("sharemusic.Models.ListeningHistoryModel", b =>
@@ -102,7 +105,7 @@ namespace sharemusic.Migrations
 
                     b.HasIndex("SongSpotifyId");
 
-                    b.ToTable("ListeningHistory", (string)null);
+                    b.ToTable("ListeningHistory");
                 });
 
             modelBuilder.Entity("sharemusic.Models.PlaylistModel", b =>
@@ -130,7 +133,7 @@ namespace sharemusic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Playlists", (string)null);
+                    b.ToTable("Playlists");
                 });
 
             modelBuilder.Entity("sharemusic.Models.SongModel", b =>
@@ -194,7 +197,7 @@ namespace sharemusic.Migrations
 
                     b.HasIndex("PlaylistModelId");
 
-                    b.ToTable("Songs", (string)null);
+                    b.ToTable("Songs");
                 });
 
             modelBuilder.Entity("sharemusic.Models.SpotifyTokenRequestModel", b =>
@@ -225,7 +228,7 @@ namespace sharemusic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SpotifyTokens", (string)null);
+                    b.ToTable("SpotifyTokens");
                 });
 
             modelBuilder.Entity("sharemusic.Models.UserModel", b =>
@@ -244,7 +247,7 @@ namespace sharemusic.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("sharemusic.Models.AlbumModel", b =>

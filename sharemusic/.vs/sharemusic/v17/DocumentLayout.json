@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "D:\\Coding\\sharemusic\\sharemusic\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\controllers\\playlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\controllers\\playlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\service\\listeninghistoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\listeninghistoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\service\\playlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\service\\playlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\controllers\\listeninghistorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\controllers\\listeninghistorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\interface\\iplaylistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\interface\\iplaylistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\controllers\\recommendationcontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\controllers\\recommendationcontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|d:\\coding\\sharemusic\\sharemusic\\sharemusic\\interface\\ilisteninghistoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D850F944-5D55-4FB0-A342-241362428D4F}|sharemusic\\sharemusic.csproj|solutionrelative:sharemusic\\interface\\ilisteninghistoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,41 +42,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IPlaylistService.cs",
-              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Interface\\IPlaylistService.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Interface\\IPlaylistService.cs",
-              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Interface\\IPlaylistService.cs",
-              "RelativeToolTip": "sharemusic\\Interface\\IPlaylistService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAiAAAA",
+              "DocumentIndex": 0,
+              "Title": "ListeningHistoryService.cs",
+              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Service\\ListeningHistoryService.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Service\\ListeningHistoryService.cs",
+              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Service\\ListeningHistoryService.cs",
+              "RelativeToolTip": "sharemusic\\Service\\ListeningHistoryService.cs",
+              "ViewState": "AQIAALoAAAAAAAAAAAAAAM0AAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T21:31:24.146Z",
+              "WhenOpened": "2025-09-22T12:12:21.11Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PlaylistController.cs",
-              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Controllers\\PlaylistController.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Controllers\\PlaylistController.cs",
-              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Controllers\\PlaylistController.cs",
-              "RelativeToolTip": "sharemusic\\Controllers\\PlaylistController.cs",
-              "ViewState": "AQIAAFwAAAAAAAAAAAAIwI0AAAAsAAAA",
+              "DocumentIndex": 3,
+              "Title": "IListeningHistoryService.cs",
+              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Interface\\IListeningHistoryService.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Interface\\IListeningHistoryService.cs",
+              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Interface\\IListeningHistoryService.cs",
+              "RelativeToolTip": "sharemusic\\Interface\\IListeningHistoryService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAABMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T20:57:59.519Z",
+              "WhenOpened": "2025-09-22T12:11:50.838Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PlaylistService.cs",
-              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Service\\PlaylistService.cs",
-              "RelativeDocumentMoniker": "sharemusic\\Service\\PlaylistService.cs",
-              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Service\\PlaylistService.cs",
-              "RelativeToolTip": "sharemusic\\Service\\PlaylistService.cs",
-              "ViewState": "AQIAAIwAAAAAAAAAAAAUwNoAAAABAAAA",
+              "Title": "ListeningHistoryController.cs",
+              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Controllers\\ListeningHistoryController.cs",
+              "RelativeDocumentMoniker": "sharemusic\\Controllers\\ListeningHistoryController.cs",
+              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Controllers\\ListeningHistoryController.cs",
+              "RelativeToolTip": "sharemusic\\Controllers\\ListeningHistoryController.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAcwDYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T20:34:37.571Z",
+              "WhenOpened": "2025-09-22T12:11:15.765Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RecommendationController .cs",
+              "DocumentMoniker": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Controllers\\RecommendationController .cs",
+              "RelativeDocumentMoniker": "sharemusic\\Controllers\\RecommendationController .cs",
+              "ToolTip": "D:\\Coding\\sharemusic\\sharemusic\\sharemusic\\Controllers\\RecommendationController .cs",
+              "RelativeToolTip": "sharemusic\\Controllers\\RecommendationController .cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-22T12:11:10.553Z",
               "EditorCaption": ""
             }
           ]

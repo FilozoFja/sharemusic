@@ -114,21 +114,20 @@ namespace sharemusic.Service
         public async Task DownloadSongsFromUserPlaylist(string playlistId)
         {
             SpotifyClient spotify = await SetSpotifyDefaultRequest();
-
             await Task.Delay(500);
 
             var playlistFull = await spotify.Playlists.Get(playlistId);
-
             var playlist = await _musicDbContext.Playlists
                 .Include(p => p.Songs)
+                    .ThenInclude(s => s.Album)
                 .FirstOrDefaultAsync(p => p.SpotifyId == playlistId);
 
             if (playlist == null)
             {
                 await _playlistService.AddPlaylistAsync(playlistFull);
-
                 playlist = await _musicDbContext.Playlists
                     .Include(p => p.Songs)
+                        .ThenInclude(s => s.Album)
                     .FirstOrDefaultAsync(p => p.SpotifyId == playlistId);
             }
 
@@ -144,8 +143,7 @@ namespace sharemusic.Service
                     allTracks.AddRange(page.Items);
                 }
                 if (page.Next == null) break;
-
-                await Task.Delay(300);
+                await Task.Delay(200);
                 page = await spotify.NextPage(page);
             }
 
@@ -153,10 +151,18 @@ namespace sharemusic.Service
             {
                 if (item.Track is FullTrack track)
                 {
-                    var existingSong = _musicDbContext.Songs.FirstOrDefault(s => s.SpotifyId == track.Id);
+                    var existingSong = await _musicDbContext.Songs
+                        .Include(s => s.Album)
+                        .FirstOrDefaultAsync(s => s.SpotifyId == track.Id);
 
                     await Task.Delay(200);
                     var mainArtist = await GetOrCreateArtistAsync(track.Artists.First().Id, spotify);
+
+                    AlbumModel album = null;
+                    if (track.Album != null)
+                    {
+                        album = await GetOrCreateAlbumAsync(track.Album.Id, spotify);
+                    }
 
                     if (existingSong == null)
                     {
@@ -166,12 +172,20 @@ namespace sharemusic.Service
                             Title = track.Name,
                             Artist = string.Join(", ", track.Artists.Select(a => a.Name)),
                             ArtistSpotifyId = track.Artists.FirstOrDefault()?.Id,
-                            Album = track.Album?.Name,
-                            CoverImageUrl = track.Album?.Images?.FirstOrDefault()?.Url,
+                            AlbumId = album.SpotifyId, 
+                            Album = album,
+                            AlbumName = track.Album?.Name,
+                            CoverImageUrl = album?.CoverImageUrl ?? track.Album?.Images?.FirstOrDefault()?.Url,
                             IsDraft = true,
-                            ReleaseDate = DateTime.TryParse(track.Album?.ReleaseDate, out var rd) ? rd : null
+                            ReleaseDate = album?.ReleaseDate ?? (DateTime.TryParse(track.Album?.ReleaseDate, out var rd) ? rd : null)
                         };
+
                         _musicDbContext.Songs.Add(existingSong);
+                    }
+                    else if (existingSong.Album == null && album != null)
+                    {
+                        existingSong.AlbumId = album.SpotifyId;
+                        existingSong.Album = album;
                     }
 
                     if (!playlist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
@@ -182,8 +196,15 @@ namespace sharemusic.Service
                     if (!mainArtist.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
                     {
                         mainArtist.Songs.Add(existingSong);
-                        await _musicDbContext.SaveChangesAsync();
                     }
+
+                    if (album != null && !album.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
+                    {
+                        album.Songs.Add(existingSong);
+                    }
+
+                    await _musicDbContext.SaveChangesAsync();
+
                     if (mainArtist.Genres != null)
                     {
                         foreach (var genreName in mainArtist.Genres)
@@ -191,10 +212,8 @@ namespace sharemusic.Service
                             if (!string.IsNullOrWhiteSpace(genreName))
                             {
                                 var genre = await GetOrCreateGenreAsync(genreName, spotify);
-
                                 if (!genre.Songs.Any(s => s.SpotifyId == existingSong.SpotifyId))
                                     genre.Songs.Add(existingSong);
-                                await _musicDbContext.SaveChangesAsync();
                             }
                         }
                     }
@@ -280,6 +299,37 @@ namespace sharemusic.Service
             var token = await _tokenService.GetAccessTokenAsync();
             var config = SpotifyClientConfig.CreateDefault();
             return new SpotifyClient(config.WithToken(token.AccessToken));
+        }
+
+        private async Task<AlbumModel> GetOrCreateAlbumAsync(string albumId, SpotifyClient spotify)
+        {
+            var existingAlbum = await _musicDbContext.Albums
+                .Include(a => a.Artist)
+                .Include(a => a.Songs)
+                .FirstOrDefaultAsync(a => a.SpotifyId == albumId);
+
+            if (existingAlbum != null)
+                return existingAlbum;
+
+            await Task.Delay(200);
+            var spotifyAlbum = await spotify.Albums.Get(albumId);
+
+            var albumArtist = await GetOrCreateArtistAsync(spotifyAlbum.Artists.First().Id, spotify);
+
+            var newAlbum = new AlbumModel
+            {
+                SpotifyId = spotifyAlbum.Id,
+                Name = spotifyAlbum.Name,
+                CoverImageUrl = spotifyAlbum.Images?.FirstOrDefault()?.Url,
+                ReleaseDate = DateTime.TryParse(spotifyAlbum.ReleaseDate, out var rd) ? rd : null,
+                ArtistSpotifyId = spotifyAlbum.Artists.First().Id,
+                Artist = albumArtist
+            };
+
+            _musicDbContext.Albums.Add(newAlbum);
+            await _musicDbContext.SaveChangesAsync();
+
+            return newAlbum;
         }
     }
 }

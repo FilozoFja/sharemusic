@@ -13,7 +13,6 @@ namespace sharemusic.Mapper
             CreateMap<SongModelDTO, SongModel>()
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
                 .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => src.Artist))
-                .ForMember(dest => dest.Album, opt => opt.MapFrom(src => src.Album))
                 .ForMember(dest => dest.IsDraft, opt => opt.MapFrom(src => src.IsDraft))
                 .ForMember(dest => dest.ArtistSpotifyId, opt => opt.MapFrom(src => src.ArtistSpotifyId))
                 .ForMember(dest => dest.LocalSongPath, opt => opt.MapFrom(src => src.LocalSongPath))
@@ -25,7 +24,7 @@ namespace sharemusic.Mapper
                 .ForMember(dest => dest.SpotifyId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Artist, opt => opt.MapFrom(src => string.Join(", ", src.Artists.Select(a => a.Name))))
-                .ForMember(dest => dest.Album, opt => opt.MapFrom(src => src.Album.Name))
+                .ForMember(dest => dest.AlbumName, opt => opt.MapFrom(src => src.Album.Name))
                 .ForMember(dest => dest.CoverImageUrl, opt => opt.MapFrom(src =>
                     src.Album.Images != null && src.Album.Images.Count > 0 ? src.Album.Images[0].Url : null)).ReverseMap();
         }

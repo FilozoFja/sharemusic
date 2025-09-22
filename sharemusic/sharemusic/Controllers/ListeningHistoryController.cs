@@ -46,6 +46,13 @@ namespace sharemusic.Controllers
             var topGenres = await _listeningHistoryService.GetTopListenedGenres(top);
             return Ok(topGenres);
         }
+        [HttpGet("top-albums")]
+        public async Task<IActionResult> GetTopListenedAlbums(int top)
+        {
+            var topAlbums = await _listeningHistoryService.GetTopListenedAlbums(top);
+            return Ok(topAlbums);
+        }
+
         [HttpGet("history/{take}")]
         public async Task<IActionResult> GetRecentListeningHistory(int take)
         {
