@@ -10,7 +10,7 @@ public class ArtistModel
     public string? Name { get; set; }
     public string? ImageUrl { get; set; }
     public List<string?> Genres { get; set; } = [];
-
-    public List<SongModel> Songs { get; set; } = new List<SongModel>();
-    public List<AlbumModel> Albums { get; set; } = new List<AlbumModel>();
+    
+    public virtual ICollection<SongModel> Songs { get; set; } = new List<SongModel>();
+    public virtual ICollection<AlbumModel> Albums { get; set; } = new List<AlbumModel>();
 }

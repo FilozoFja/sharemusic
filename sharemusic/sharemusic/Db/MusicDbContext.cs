@@ -22,10 +22,10 @@ namespace sharemusic.Db
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AlbumModel>()
-               .HasOne(a => a.Artist)
-               .WithMany(ar => ar.Albums)
-               .HasForeignKey(a => a.ArtistSpotifyId)
-               .HasPrincipalKey(ar => ar.SpotifyId);
+                .HasOne(a => a.Artist)
+                .WithMany(ar => ar.Albums)
+                .HasForeignKey(a => a.ArtistSpotifyId)
+                .IsRequired(false);
 
             modelBuilder.Entity<SongModel>()
                 .HasOne(s => s.Album)

@@ -201,16 +201,22 @@ namespace sharemusic.Service
 
         public async Task<List<AlbumShortModelDTO>> GetTopListenedAlbums(int top)
         {
-            var query = await _musicDbContext.ListeningHistory
+            var topAlbumIds = await _musicDbContext.ListeningHistory
                 .Include(h => h.Song)
-                .Where(h => h.Song != null)
-                .GroupBy(h => h.Song.Album) 
+                .ThenInclude(s => s.Album)
+                .Where(h => h.Song != null && h.Song.Album != null)
+                .GroupBy(h => h.Song.Album.SpotifyId)
                 .OrderByDescending(g => g.Count())
                 .Take(top)
-                .Select(g => g.Key) 
+                .Select(g => g.Key)
+                .ToListAsync();
+            
+            var albums = await _musicDbContext.Albums
+                .Include(a => a.Artist)
+                .Where(a => topAlbumIds.Contains(a.SpotifyId))
                 .ToListAsync();
 
-            return _mapper.Map<List<AlbumShortModelDTO>>(query);
+            return _mapper.Map<List<AlbumShortModelDTO>>(albums);
         }
     }
 }

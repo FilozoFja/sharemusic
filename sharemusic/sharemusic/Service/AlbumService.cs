@@ -21,7 +21,7 @@ namespace sharemusic.Service
 
         public async Task<List<AlbumShortModelDTO>> GetAllAlbums()
         {
-            var albums = await _context.Albums.ToListAsync();
+            var albums = await _context.Albums.Include(a => a.Artist).ToListAsync();
             return _mapper.Map<List<AlbumShortModelDTO>>(albums);
         }
 
