@@ -72,12 +72,12 @@ namespace sharemusic.Controller {
         /// <summary>
         ///  Adds a song to a playlist.
         /// </summary>
-        [HttpPost("{playlistId}/songs/{songId}")]
-        public async Task<IActionResult> AddSongToPlaylistAsync(int playlistId,int songId)
+        [HttpPost("{playlistId}/songs/{songSpotifyId}")]
+        public async Task<IActionResult> AddSongToPlaylistAsync(int playlistId, string songSpotifyId)
         {
             try
             {
-                await _playlistService.AddSongToPlaylistAsync(playlistId, songId);
+                await _playlistService.AddSongToPlaylistAsync(playlistId, songSpotifyId);
                 return Ok("Song added to playlist successfully.");
             }
             catch (Exception ex)

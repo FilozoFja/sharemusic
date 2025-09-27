@@ -9,7 +9,7 @@ namespace sharemusic.Interface
     {
         public Task AddPlaylistAsync(FullPlaylist playlistToAdd);
         public Task<PlaylistModel> AddPlaylistAsync(PlaylistModelDTO playlistToAdd, IFormFile coverImage);
-        public Task AddSongToPlaylistAsync(int playlistId, int songId);
+        public Task AddSongToPlaylistAsync(int playlistId, string songId);
         public Task DeleteSongFromPlaylistAsync(int playlistId, int songId);
         public Task<PlaylistModel> GetPlaylistByIdAsync(int id);
         public Task<List<PlaylistShortModelDTO>> GetAllPlaylistsAsync();

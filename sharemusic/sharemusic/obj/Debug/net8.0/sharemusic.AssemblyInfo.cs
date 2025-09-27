@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sharemusic")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+050fa7a84ec656d1aab4afc33564986faba911f9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b68b50ee83f9a2e63f814764a24bcf80655c165")]
 [assembly: System.Reflection.AssemblyProductAttribute("sharemusic")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sharemusic")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

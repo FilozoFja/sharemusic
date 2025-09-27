@@ -55,7 +55,7 @@ public class PlaylistService : IPlaylistService
 
         return playlist;
     }
-    public async Task AddSongToPlaylistAsync(int playlistId, int songId)
+    public async Task AddSongToPlaylistAsync(int playlistId, string songId)
     {
         var playlist = await _musicDbContext.Playlists.FindAsync(playlistId);
         if (playlist == null)
