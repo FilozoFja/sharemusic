@@ -30,7 +30,8 @@ namespace sharemusic.Db
             modelBuilder.Entity<SongModel>()
                 .HasOne(s => s.Album)
                 .WithMany(a => a.Songs)
-                .HasForeignKey(s => s.AlbumId);
+                .HasForeignKey(s => s.AlbumId)
+                .IsRequired(false);
         }
     }
 }

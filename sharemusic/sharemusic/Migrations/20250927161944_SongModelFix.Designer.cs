@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sharemusic.Db;
 
@@ -10,9 +11,11 @@ using sharemusic.Db;
 namespace sharemusic.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    partial class MusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250927161944_SongModelFix")]
+    partial class SongModelFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
@@ -139,6 +142,7 @@ namespace sharemusic.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AlbumId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AlbumName")
@@ -286,7 +290,9 @@ namespace sharemusic.Migrations
                 {
                     b.HasOne("sharemusic.Models.AlbumModel", "Album")
                         .WithMany("Songs")
-                        .HasForeignKey("AlbumId");
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("sharemusic.Models.ArtistModel", null)
                         .WithMany("Songs")

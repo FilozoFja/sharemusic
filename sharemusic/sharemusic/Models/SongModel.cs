@@ -12,7 +12,7 @@ namespace sharemusic.Models
         public string? Artist { get; set; }
         public string? ArtistSpotifyId { get; set; }
         public string? AlbumName { get; set; }
-        public required string AlbumId { get; set; }
+        public string? AlbumId { get; set; }
         [JsonIgnore]
         public AlbumModel Album { get; set; }
 
