@@ -122,7 +122,7 @@ namespace sharemusic.Service
         /// </summary>
         public async Task<List<SongShortModelDTO>> GetAllSongsAsync()
         {
-            var songs = await _dbContext.Songs.ToListAsync();
+            var songs = await _dbContext.Songs.Include(x => x.Album).ToListAsync();
             if (songs == null || !songs.Any())
             {
                 throw new Exception("No songs found.");

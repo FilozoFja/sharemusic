@@ -18,7 +18,8 @@ namespace sharemusic.Mapper
                 .ForMember(dest => dest.LocalSongPath, opt => opt.MapFrom(src => src.LocalSongPath))
                 .ForMember(dest => dest.ReleaseDate, opt => opt.MapFrom(src => src.ReleaseDate))
                 .ForMember(dest => dest.SongLengthInSeconds, opt => opt.MapFrom(src => src.SongLengthInSeconds))
-                .ForMember(dest => dest.CoverImageUrl, opt => opt.MapFrom(src => src.CoverImageUrl)).ReverseMap();
+                .ForMember(dest => dest.CoverImageUrl, opt => opt.MapFrom(src => src.CoverImageUrl))
+                .ForMember(dest => dest.Album, opt => opt.MapFrom(src => src.Album)).ReverseMap();
             CreateMap<SongShortModelDTO, SongModel>().ReverseMap();
             _ = CreateMap<FullTrack, SongModel>()
                 .ForMember(dest => dest.SpotifyId, opt => opt.MapFrom(src => src.Id))

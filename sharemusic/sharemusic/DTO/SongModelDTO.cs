@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using sharemusic.DTO.Album;
+using sharemusic.Models;
 
 namespace sharemusic.DTO
 {
@@ -26,6 +28,7 @@ namespace sharemusic.DTO
         public string? ArtistSpotifyId { get; set; }
         
         public DateTime? ReleaseDate { get; set; }
+        public AlbumShortModelDTO? Album { get; set; }
 
     }
 }

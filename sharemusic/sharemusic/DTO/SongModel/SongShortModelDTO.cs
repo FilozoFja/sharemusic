@@ -1,3 +1,5 @@
+using sharemusic.DTO.Album;
+
 namespace sharemusic.DTO.SongModel;
 
 public class SongShortModelDTO
@@ -8,5 +10,6 @@ public class SongShortModelDTO
     public int? SongLengthInSeconds { get; set; }
     public DateTime? ReleaseDate { get; set; }
     public string? Artist { get; set; } = string.Empty;
-    public string? Album { get; set; } = string.Empty;
+    public AlbumShortModelDTO? Album { get; set; } 
+    
 }
