@@ -12,5 +12,6 @@ namespace sharemusic.Models
         public string? CoverUrl { get; set; }
         public List<SongModel> Songs { get; set; } = new List<SongModel>();
         public string OwnerName { get; set; } = string.Empty;
+        public bool? IsFetched { get; set; } = false;
     }
 }

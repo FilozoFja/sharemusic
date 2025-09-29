@@ -147,6 +147,13 @@ namespace sharemusic.Controller {
             var playlist = await _playlistService.UpdatePlaylistCoverAsync(id, coverPhoto);
             return Ok(playlist);
         }
+
+        [HttpPut("playlist/{playlistId}")]
+        public async Task<IActionResult> SetPlaylistFetching(bool isFetched, int  playlistId)
+        {
+            await _playlistService.SetPlaylistFetching(isFetched, playlistId);
+            return Ok();
+        }
     
     }
 }

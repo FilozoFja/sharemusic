@@ -216,4 +216,17 @@ public class PlaylistService : IPlaylistService
         await _musicDbContext.SaveChangesAsync();
         return playlist;
     }
+
+    public async Task SetPlaylistFetching(bool isFetched, int playlistId)
+    {
+        var playlist = await _musicDbContext.Playlists.FirstOrDefaultAsync(x => x.Id == playlistId);
+        if (playlist == null)
+        {
+            throw new Exception("Playlist not found.");
+        }
+        playlist.IsFetched =  isFetched;
+        _musicDbContext.Playlists.Update(playlist);
+        await _musicDbContext.SaveChangesAsync();
+        
+    }
 }

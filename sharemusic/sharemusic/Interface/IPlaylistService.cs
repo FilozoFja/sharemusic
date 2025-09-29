@@ -18,5 +18,6 @@ namespace sharemusic.Interface
         public Task<PlaylistModel> UpdatePlaylistAsync(int id, PlaylistModelDTO updatedPlaylist);
         public Task DeletePlaylistAsync(int id);
         public Task<PlaylistModel> UpdatePlaylistCoverAsync(int id, IFormFile coverImage);
+        public Task SetPlaylistFetching(bool isFetched, int playlistId);
     }
 }
