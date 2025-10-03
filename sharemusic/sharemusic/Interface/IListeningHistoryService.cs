@@ -20,5 +20,7 @@ namespace sharemusic.Interface
         Task<List<SongShortModelDTO>> GetLeastPopularSongsByGenre(string genre, int top);
         Task<List<ArtistShortModelDTO>> GetLeastPopularArtistsByGenre(string genre, int top);
         Task<List<PlaylistShortModelDTO>> GetLeastPopularPlaylistsByGenre(string genre, int top);
+        Task<SongModel> GetRandomSong();
+        Task<List<AlbumShortModelDTO>> GetRandomAlbum(int top);
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using sharemusic.DTO.Album;
 using sharemusic.DTO.SongModel;
 using sharemusic.DTO.ArtistModel;
 using sharemusic.DTO.PlaylistModel;
 using sharemusic.Interface;
+using sharemusic.Models;
 
 namespace sharemusic.Controllers
 {
@@ -64,6 +66,19 @@ namespace sharemusic.Controllers
             }
 
             return Ok(recommendedPlaylists);
+        }
+
+        [HttpGet("recomendedSongBigBanner")]
+        public async Task<ActionResult<SongModel>> RecommendationSelectedASong()
+        {
+            var song = await _listeningHistoryService.GetRandomSong();
+            return Ok(song);
+        }
+        [HttpGet("getRandomAlbums")]
+        public async Task<ActionResult<List<AlbumShortModelDTO>>> RecommendationSelectedAlbums(int top)
+        {
+            var albums = await _listeningHistoryService.GetRandomAlbum(top);
+            return Ok(albums);
         }
     }
 }

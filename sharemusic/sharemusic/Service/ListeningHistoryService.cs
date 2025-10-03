@@ -218,5 +218,42 @@ namespace sharemusic.Service
 
             return _mapper.Map<List<AlbumShortModelDTO>>(albums);
         }
+        public async Task<SongModel> GetRandomSong()
+        {
+            var totalCount = await _musicDbContext.Songs.CountAsync();
+    
+            if (totalCount == 0)
+            {
+                return null;
+            }
+    
+            var random = new Random();
+            var skipCount = random.Next(0, totalCount);
+    
+            var randomSong = await _musicDbContext.Songs
+                .OrderBy(s => s.SpotifyId) 
+                .Skip(skipCount)
+                .FirstOrDefaultAsync();
+    
+            return randomSong;
+        }
+        public async Task<List<AlbumShortModelDTO>> GetRandomAlbum(int top)
+        {
+            var totalCount = await _musicDbContext.Albums.CountAsync();
+    
+            if (totalCount == 0)
+            {
+                return new List<AlbumShortModelDTO>();
+            }
+            
+            var takeCount = Math.Min(top, totalCount);
+    
+            var randomAlbums = await _musicDbContext.Albums
+                .Include(a => a.Artist)
+                .Take(takeCount)
+                .ToListAsync();
+    
+            return _mapper.Map<List<AlbumShortModelDTO>>(randomAlbums);
+        }
     }
 }
