@@ -38,7 +38,7 @@ namespace sharemusic.Service
         /// <summary>
         /// Adding song to library by spotify ID and file.
         /// </summary>
-        public async Task AddSongToLibraryAsync(string spotifyId, IFormFile songToAdd)
+        public async Task AddSongToLibraryAsync(string spotifyId, IFormFile songToAdd, int duration)
         {
             var song = await _dbContext.Songs.FirstOrDefaultAsync(x => x.SpotifyId == spotifyId);
             if (song == null)
@@ -70,7 +70,7 @@ namespace sharemusic.Service
 
             song.LocalSongPath = filePath;
             song.IsDraft = false;
-            song.SongLengthInSeconds = (int)(songToAdd.Length / 1000); 
+            song.SongLengthInSeconds = duration;
 
             try
             {

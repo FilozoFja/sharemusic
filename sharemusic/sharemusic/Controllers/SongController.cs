@@ -65,9 +65,9 @@ namespace sharemusic.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("Files/{spotifyId}")]
-        public async Task<IActionResult> AddSongToLibrary(string spotifyId, IFormFile songToAdd)
+        public async Task<IActionResult> AddSongToLibrary(string spotifyId, IFormFile songToAdd, int duration)
         {
-            await _songService.AddSongToLibraryAsync(spotifyId, songToAdd);
+            await _songService.AddSongToLibraryAsync(spotifyId, songToAdd, duration);
             return Ok(new { message = "Song added to library successfully." });
         }
 
