@@ -1,13 +1,16 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using sharemusic.Interface;
 using sharemusic.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var projectRoot = Path.Combine(AppContext.BaseDirectory, "..", "..", "..");
+var storagePath = Path.Combine(projectRoot, "FileStorage");
+
+storagePath = Path.GetFullPath(storagePath);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -31,13 +34,17 @@ builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(storagePath),
+    RequestPath = "/files"
+});
 
 app.UseHttpsRedirection();
 
